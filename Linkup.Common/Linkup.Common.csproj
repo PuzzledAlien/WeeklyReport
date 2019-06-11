@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{79D0347A-7F1D-4AF4-B013-3B6FA12E066C}</ProjectGuid>
+    <RootNamespace>Linkup.Common</RootNamespace>
+    <AssemblyName>Linkup.Common</AssemblyName>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="EnterpriseLibrary.Common.NetCore" Version="6.1.15-rc" />
+    <PackageReference Include="EnterpriseLibrary.Data.NetCore" Version="6.1.10-rc" />
+    <PackageReference Include="EnterpriseLibrary.ExceptionHandling.Logging.NetCore" Version="6.1.8-rc" />
+    <PackageReference Include="EnterpriseLibrary.ExceptionHandling.NetCore" Version="6.1.8-rc" />
+    <PackageReference Include="EnterpriseLibrary.Logging.Database.NetCore" Version="6.1.7-rc" />
+    <PackageReference Include="EnterpriseLibrary.Logging.NetCore" Version="6.1.7-rc" />
+    <PackageReference Include="Gma.QrCodeNet.Encoding" Version="2.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+  </ItemGroup>
+</Project>

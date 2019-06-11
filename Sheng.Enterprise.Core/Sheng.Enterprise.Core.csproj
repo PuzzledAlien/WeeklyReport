@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{405C21F4-E46A-4FCA-A8FE-BDEF9EC130B8}</ProjectGuid>
+    <RootNamespace>Sheng.Enterprise.Core</RootNamespace>
+    <AssemblyName>Sheng.Enterprise.Core</AssemblyName>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Sheng.Enterprise.Infrastructure\Sheng.Enterprise.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>

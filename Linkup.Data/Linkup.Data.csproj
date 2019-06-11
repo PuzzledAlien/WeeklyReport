@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{75901595-6F1A-4101-8909-59FDF89168DB}</ProjectGuid>
+    <RootNamespace>Linkup.Data</RootNamespace>
+    <AssemblyName>Linkup.Data</AssemblyName>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Linkup.DataRelationalMapping\Linkup.DataRelationalMapping.csproj" />
+  </ItemGroup>
+</Project>
