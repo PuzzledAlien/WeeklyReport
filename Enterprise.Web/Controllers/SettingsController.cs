@@ -1,9 +1,9 @@
 using Sheng.Enterprise.Core;
-using Sheng.Enterprise.Web.Models;
+using Enterprise.Web.Models;
 using System;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Sheng.Enterprise.Web.Controllers
+namespace Enterprise.Web.Controllers
 {
 	public class SettingsController : EnterpriseController
 	{
@@ -63,7 +63,7 @@ namespace Sheng.Enterprise.Web.Controllers
 		            OfficeLocationList = _settingsManager.GetOfficeLocationList(UserContext.User.DomainId),
 		            WorkTypeList = _settingsManager.GetWorkTypeList(UserContext.Domain.Id)
 		        };
-		    string text = Request.QueryString["id"];
+		    string text = Request.Query["id"];
 			Guid id;
 			if (!string.IsNullOrEmpty(text) && Guid.TryParse(text, out id))
 			{

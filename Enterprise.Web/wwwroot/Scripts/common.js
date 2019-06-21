@@ -6,7 +6,7 @@ function goUrl(url)
     window.location.href = url;
 }
 
-function getQueryString(name)
+function getQuery(name)
 {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);

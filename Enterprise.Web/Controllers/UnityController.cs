@@ -1,7 +1,7 @@
 using System;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Sheng.Enterprise.Web.Controllers
+namespace Enterprise.Web.Controllers
 {
 	public class UnityController : EnterpriseController
 	{

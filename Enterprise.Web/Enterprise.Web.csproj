@@ -1,21 +1,290 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="ExcelExport\**" />
+    <Compile Remove="TraceLog\**" />
+    <Content Remove="ExcelExport\**" />
+    <Content Remove="TraceLog\**" />
+    <EmbeddedResource Remove="ExcelExport\**" />
+    <EmbeddedResource Remove="TraceLog\**" />
+    <None Remove="ExcelExport\**" />
+    <None Remove="TraceLog\**" />
+    <TypeScriptCompile Remove="ExcelExport\**" />
+    <TypeScriptCompile Remove="TraceLog\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Content\bootstrap-grid.css" />
+    <None Include="wwwroot\Content\bootstrap-grid.css.map" />
+    <None Include="wwwroot\Content\bootstrap-grid.min.css" />
+    <None Include="wwwroot\Content\bootstrap-grid.min.css.map" />
+    <None Include="wwwroot\Content\bootstrap-reboot.css" />
+    <None Include="wwwroot\Content\bootstrap-reboot.css.map" />
+    <None Include="wwwroot\Content\bootstrap-reboot.min.css" />
+    <None Include="wwwroot\Content\bootstrap-reboot.min.css.map" />
+    <None Include="wwwroot\Content\bootstrap-theme.css" />
+    <None Include="wwwroot\Content\bootstrap-theme.min.css" />
+    <None Include="wwwroot\Content\bootstrap.css" />
+    <None Include="wwwroot\Content\bootstrap.css.map" />
+    <None Include="wwwroot\Content\bootstrap.min.css" />
+    <None Include="wwwroot\Content\bootstrap.min.css.map" />
+    <None Include="wwwroot\Content\Login.css" />
+    <None Include="wwwroot\Content\Site.css" />
+    <None Include="wwwroot\Content\Style.css" />
+    <None Include="wwwroot\Content\WeeklyReport.css" />
+    <None Include="wwwroot\Content\zTreeStyle\img\diy\1_close.png" />
+    <None Include="wwwroot\Content\zTreeStyle\img\diy\1_open.png" />
+    <None Include="wwwroot\Content\zTreeStyle\img\diy\2.png" />
+    <None Include="wwwroot\Content\zTreeStyle\img\diy\3.png" />
+    <None Include="wwwroot\Content\zTreeStyle\img\diy\4.png" />
+    <None Include="wwwroot\Content\zTreeStyle\img\diy\5.png" />
+    <None Include="wwwroot\Content\zTreeStyle\img\diy\6.png" />
+    <None Include="wwwroot\Content\zTreeStyle\img\diy\7.png" />
+    <None Include="wwwroot\Content\zTreeStyle\img\diy\8.png" />
+    <None Include="wwwroot\Content\zTreeStyle\img\diy\9.png" />
+    <None Include="wwwroot\Content\zTreeStyle\img\line_conn.gif" />
+    <None Include="wwwroot\Content\zTreeStyle\img\loading.gif" />
+    <None Include="wwwroot\Content\zTreeStyle\img\zTreeStandard.gif" />
+    <None Include="wwwroot\Content\zTreeStyle\img\zTreeStandard.png" />
+    <None Include="wwwroot\Content\zTreeStyle\zTreeStyle.css" />
+    <None Include="wwwroot\fonts\glyphicons-halflings-regular.eot" />
+    <None Include="wwwroot\fonts\glyphicons-halflings-regular.svg" />
+    <None Include="wwwroot\fonts\glyphicons-halflings-regular.ttf" />
+    <None Include="wwwroot\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="wwwroot\Images\dot.png" />
+    <None Include="wwwroot\Images\leftMenuItem_active_bg.jpg" />
+    <None Include="wwwroot\Images\leftMenu_bg.jpg" />
+    <None Include="wwwroot\Images\leftTitle_bg.jpg" />
+    <None Include="wwwroot\Images\login.jpg" />
+    <None Include="wwwroot\Images\topbar_bg.jpg" />
+    <None Include="wwwroot\Scripts\bootstrap.bundle.js" />
+    <None Include="wwwroot\Scripts\bootstrap.bundle.js.map" />
+    <None Include="wwwroot\Scripts\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\Scripts\bootstrap.bundle.min.js.map" />
+    <None Include="wwwroot\Scripts\bootstrap.js" />
+    <None Include="wwwroot\Scripts\bootstrap.js.map" />
+    <None Include="wwwroot\Scripts\bootstrap.min.js" />
+    <None Include="wwwroot\Scripts\bootstrap.min.js.map" />
+    <None Include="wwwroot\Scripts\common.js" />
+    <None Include="wwwroot\Scripts\esm\popper-utils.js" />
+    <None Include="wwwroot\Scripts\esm\popper-utils.js.map" />
+    <None Include="wwwroot\Scripts\esm\popper-utils.min.js" />
+    <None Include="wwwroot\Scripts\esm\popper-utils.min.js.map" />
+    <None Include="wwwroot\Scripts\esm\popper.js" />
+    <None Include="wwwroot\Scripts\esm\popper.js.map" />
+    <None Include="wwwroot\Scripts\esm\popper.min.js" />
+    <None Include="wwwroot\Scripts\esm\popper.min.js.map" />
+    <None Include="wwwroot\Scripts\index.d.ts" />
+    <None Include="wwwroot\Scripts\jquery-1.10.2.intellisense.js" />
+    <None Include="wwwroot\Scripts\jquery-1.10.2.js" />
+    <None Include="wwwroot\Scripts\jquery-1.10.2.min.js" />
+    <None Include="wwwroot\Scripts\jquery-1.10.2.min.map" />
+    <None Include="wwwroot\Scripts\jquery-3.4.1.intellisense.js" />
+    <None Include="wwwroot\Scripts\jquery-3.4.1.js" />
+    <None Include="wwwroot\Scripts\jquery-3.4.1.min.js" />
+    <None Include="wwwroot\Scripts\jquery-3.4.1.min.map" />
+    <None Include="wwwroot\Scripts\jquery-3.4.1.slim.js" />
+    <None Include="wwwroot\Scripts\jquery-3.4.1.slim.min.js" />
+    <None Include="wwwroot\Scripts\jquery-3.4.1.slim.min.map" />
+    <None Include="wwwroot\Scripts\jquery.validate-vsdoc.js" />
+    <None Include="wwwroot\Scripts\jquery.validate.js" />
+    <None Include="wwwroot\Scripts\jquery.validate.min.js" />
+    <None Include="wwwroot\Scripts\jquery.validate.unobtrusive.js" />
+    <None Include="wwwroot\Scripts\jquery.validate.unobtrusive.min.js" />
+    <None Include="wwwroot\Scripts\json2.js" />
+    <None Include="wwwroot\Scripts\laydate\laydate.js" />
+    <None Include="wwwroot\Scripts\laydate\need\laydate.css" />
+    <None Include="wwwroot\Scripts\laydate\skins\dahong\icon.png" />
+    <None Include="wwwroot\Scripts\laydate\skins\dahong\laydate.css" />
+    <None Include="wwwroot\Scripts\laydate\skins\default\icon.png" />
+    <None Include="wwwroot\Scripts\laydate\skins\default\laydate.css" />
+    <None Include="wwwroot\Scripts\laydate\skins\molv\icon.png" />
+    <None Include="wwwroot\Scripts\laydate\skins\molv\laydate.css" />
+    <None Include="wwwroot\Scripts\layer\extend\layer.ext.js" />
+    <None Include="wwwroot\Scripts\layer\layer.js" />
+    <None Include="wwwroot\Scripts\layer\skin\default\icon-ext.png" />
+    <None Include="wwwroot\Scripts\layer\skin\default\icon.png" />
+    <None Include="wwwroot\Scripts\layer\skin\default\loading-0.gif" />
+    <None Include="wwwroot\Scripts\layer\skin\default\loading-1.gif" />
+    <None Include="wwwroot\Scripts\layer\skin\default\loading-2.gif" />
+    <None Include="wwwroot\Scripts\layer\skin\espresso\close.png" />
+    <None Include="wwwroot\Scripts\layer\skin\espresso\icon.png" />
+    <None Include="wwwroot\Scripts\layer\skin\espresso\style.css" />
+    <None Include="wwwroot\Scripts\layer\skin\layer.css" />
+    <None Include="wwwroot\Scripts\layer\skin\layer.ext.css" />
+    <None Include="wwwroot\Scripts\laypage\laypage.js" />
+    <None Include="wwwroot\Scripts\laypage\skin\laypage.css" />
+    <None Include="wwwroot\Scripts\laytpl.js" />
+    <None Include="wwwroot\Scripts\MD5.js" />
+    <None Include="wwwroot\Scripts\modernizr-2.6.2.js" />
+    <None Include="wwwroot\Scripts\popper-utils.js" />
+    <None Include="wwwroot\Scripts\popper-utils.js.map" />
+    <None Include="wwwroot\Scripts\popper-utils.min.js" />
+    <None Include="wwwroot\Scripts\popper-utils.min.js.map" />
+    <None Include="wwwroot\Scripts\popper.js" />
+    <None Include="wwwroot\Scripts\popper.js.map" />
+    <None Include="wwwroot\Scripts\popper.min.js" />
+    <None Include="wwwroot\Scripts\popper.min.js.map" />
+    <None Include="wwwroot\Scripts\README.md" />
+    <None Include="wwwroot\Scripts\respond.js" />
+    <None Include="wwwroot\Scripts\respond.min.js" />
+    <None Include="wwwroot\Scripts\umd\popper-utils.js" />
+    <None Include="wwwroot\Scripts\umd\popper-utils.js.map" />
+    <None Include="wwwroot\Scripts\umd\popper-utils.min.js" />
+    <None Include="wwwroot\Scripts\umd\popper-utils.min.js.map" />
+    <None Include="wwwroot\Scripts\umd\popper.js" />
+    <None Include="wwwroot\Scripts\umd\popper.js.map" />
+    <None Include="wwwroot\Scripts\umd\popper.min.js" />
+    <None Include="wwwroot\Scripts\umd\popper.min.js.map" />
+    <None Include="wwwroot\Scripts\validate\additional-methods.js" />
+    <None Include="wwwroot\Scripts\validate\additional-methods.min.js" />
+    <None Include="wwwroot\Scripts\validate\jquery.validate.js" />
+    <None Include="wwwroot\Scripts\validate\jquery.validate.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_ar.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_ar.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_bg.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_bg.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_bn_BD.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_bn_BD.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_ca.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_ca.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_cs.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_cs.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_da.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_da.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_de.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_de.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_el.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_el.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_es.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_es.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_es_AR.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_es_AR.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_es_PE.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_es_PE.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_et.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_et.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_eu.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_eu.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_fa.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_fa.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_fi.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_fi.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_fr.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_fr.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_ge.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_ge.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_gl.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_gl.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_he.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_he.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_hr.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_hr.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_hu.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_hu.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_hy_AM.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_hy_AM.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_id.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_id.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_is.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_is.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_it.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_it.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_ja.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_ja.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_ka.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_ka.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_kk.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_kk.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_ko.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_ko.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_lt.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_lt.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_lv.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_lv.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_my.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_my.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_nl.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_nl.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_no.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_no.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_pl.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_pl.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_pt_BR.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_pt_BR.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_pt_PT.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_pt_PT.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_ro.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_ro.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_ru.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_ru.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_si.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_si.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_sk.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_sk.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_sl.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_sl.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_sr.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_sr.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_sr_lat.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_sr_lat.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_sv.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_sv.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_th.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_th.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_tj.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_tj.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_tr.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_tr.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_uk.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_uk.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_vi.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_vi.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_zh.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_zh.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_zh_TW.js" />
+    <None Include="wwwroot\Scripts\validate\localization\messages_zh_TW.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\methods_de.js" />
+    <None Include="wwwroot\Scripts\validate\localization\methods_de.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\methods_es_CL.js" />
+    <None Include="wwwroot\Scripts\validate\localization\methods_es_CL.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\methods_fi.js" />
+    <None Include="wwwroot\Scripts\validate\localization\methods_fi.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\methods_nl.js" />
+    <None Include="wwwroot\Scripts\validate\localization\methods_nl.min.js" />
+    <None Include="wwwroot\Scripts\validate\localization\methods_pt.js" />
+    <None Include="wwwroot\Scripts\validate\localization\methods_pt.min.js" />
+    <None Include="wwwroot\Scripts\ztree\jquery.ztree.all-3.5.min.js" />
+    <None Include="wwwroot\Scripts\ztree\jquery.ztree.core-3.5.min.js" />
+    <None Include="wwwroot\Scripts\_references.js" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0-preview5-19227-01" />
-    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.5.1">
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="3.5.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="NPOI" Version="2.4.1" />
   </ItemGroup>
 
 
   <ItemGroup>
     <ProjectReference Include="..\Sheng.Enterprise.Core\Sheng.Enterprise.Core.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="App_Start\" />
+    <Folder Include="wwwroot\bundles\jquery\" />
+    <Folder Include="wwwroot\bundles\jqueryval\" />
+    <Folder Include="wwwroot\bundles\layer\" />
+    <Folder Include="wwwroot\bundles\modernizr\" />
   </ItemGroup>
 
 </Project>

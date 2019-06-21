@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Linkup.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,14 +5,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sheng.Enterprise.Core;
-using Sheng.Enterprise.Web;
-
 
 namespace Enterprise.Web
 {
     public class Startup
     {
-        private LogService _logService = LogService.Instance;
+        private readonly LogService _logService = LogService.Instance;
 
         private ExceptionHandlingService _exceptionHandling = ServiceUnity.Instance.ExceptionHandling;
         public Startup(IConfiguration configuration)
@@ -29,8 +23,8 @@ namespace Enterprise.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            this._logService.Write("Application_Start");
-
+            _logService.Write("Application_Start");
+            
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -60,6 +54,26 @@ namespace Enterprise.Web
             app.UseCookiePolicy();
 
             app.UseRouting();
+
+            app.UseRouter(router =>
+            {
+                router.MapRoute("Default", "{controller}/{action}", new
+                {
+                    controller = "WeeklyReport",
+                    action = "Post"
+                }, new string[]
+                {
+                    "Enterprise.Web.Controllers"
+                });
+
+                router.MapRoute("Api_default", "Api/{controller}/{action}", new
+                {
+                    action = "Index"
+                }, new string[]
+                {
+                    "Enterprise.Web.Areas.Api.Controllers"
+                });
+            });
 
             app.UseAuthorization();
 

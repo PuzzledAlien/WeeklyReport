@@ -2,9 +2,10 @@ using Sheng.Enterprise.Core;
 using Sheng.Enterprise.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Sheng.Enterprise.Web.Areas.Api.Controllers
+namespace Enterprise.Web.Areas.Api.Controllers
 {
 	public class SettingsController : EnterpriseController
 	{
@@ -40,8 +41,8 @@ namespace Sheng.Enterprise.Web.Areas.Api.Controllers
 
 		[HttpPost]
 		public ActionResult RemoveJobTitle()
-		{
-			string text = Request.QueryString["id"];
+        {
+            string text = Request.Query["id"];
 			if (string.IsNullOrEmpty(text))
 			{
 				return RespondResult(false, "参数无效。");
@@ -81,7 +82,7 @@ namespace Sheng.Enterprise.Web.Areas.Api.Controllers
 		[HttpPost]
 		public ActionResult RemoveJobLevel()
 		{
-			string text = Request.QueryString["id"];
+			string text = Request.Query["id"];
 			if (string.IsNullOrEmpty(text))
 			{
 				return RespondResult(false, "参数无效。");
@@ -121,7 +122,7 @@ namespace Sheng.Enterprise.Web.Areas.Api.Controllers
 		[HttpPost]
 		public ActionResult RemoveOfficeLocation()
 		{
-			string text = Request.QueryString["id"];
+			string text = Request.Query["id"];
 			if (string.IsNullOrEmpty(text))
 			{
 				return RespondResult(false, "参数无效。");
@@ -161,7 +162,7 @@ namespace Sheng.Enterprise.Web.Areas.Api.Controllers
 		[HttpPost]
 		public ActionResult RemoveWorkType()
 		{
-			string text = Request.QueryString["id"];
+			string text = Request.Query["id"];
 			if (string.IsNullOrEmpty(text))
 			{
 				return RespondResult(false, "参数无效。");
@@ -201,7 +202,7 @@ namespace Sheng.Enterprise.Web.Areas.Api.Controllers
 		[HttpPost]
 		public ActionResult RemoveWorkTask()
 		{
-			string text = Request.QueryString["id"];
+			string text = Request.Query["id"];
 			if (string.IsNullOrEmpty(text))
 			{
 				return RespondResult(false, "参数无效。");
@@ -241,7 +242,7 @@ namespace Sheng.Enterprise.Web.Areas.Api.Controllers
 		[HttpPost]
 		public ActionResult RemoveWorkStatus()
 		{
-			string text = Request.QueryString["id"];
+			string text = Request.Query["id"];
 			if (string.IsNullOrEmpty(text))
 			{
 				return RespondResult(false, "参数无效。");
@@ -266,7 +267,7 @@ namespace Sheng.Enterprise.Web.Areas.Api.Controllers
 		[HttpPost]
 		public ActionResult RemoveCheckRelation()
 		{
-			string text = Request.QueryString["checker"];
+			string text = Request.Query["checker"];
 			if (string.IsNullOrEmpty(text))
 			{
 				return RespondResult(false, "参数无效。");
@@ -278,7 +279,7 @@ namespace Sheng.Enterprise.Web.Areas.Api.Controllers
 		[HttpPost]
 		public ActionResult GetCheckStaffList()
 		{
-			string text = Request.QueryString["checker"];
+			string text = Request.Query["checker"];
 			if (string.IsNullOrEmpty(text))
 			{
 				return RespondResult(false, "参数无效。");
@@ -320,7 +321,7 @@ namespace Sheng.Enterprise.Web.Areas.Api.Controllers
 		[HttpPost]
 		public ActionResult RemoveRole()
 		{
-			string text = Request.QueryString["id"];
+			string text = Request.Query["id"];
 			if (string.IsNullOrEmpty(text))
 			{
 				return RespondResult(false, "参数无效。");
@@ -332,7 +333,7 @@ namespace Sheng.Enterprise.Web.Areas.Api.Controllers
 		[HttpPost]
 		public ActionResult GetRole()
 		{
-			string text = Request.QueryString["id"];
+			string text = Request.Query["id"];
 			if (string.IsNullOrEmpty(text))
 			{
 				return RespondResult(false, "参数无效。");
@@ -344,7 +345,7 @@ namespace Sheng.Enterprise.Web.Areas.Api.Controllers
 		[HttpPost]
 		public ActionResult GetAuthorizationListByRoleId()
 		{
-			string text = Request.QueryString["id"];
+			string text = Request.Query["id"];
 			if (string.IsNullOrEmpty(text))
 			{
 				return RespondResult(false, "参数无效。");
@@ -400,7 +401,7 @@ namespace Sheng.Enterprise.Web.Areas.Api.Controllers
 		[HttpPost]
 		public ActionResult GetUserListByRoleId()
 		{
-			string text = Request.QueryString["id"];
+			string text = Request.Query["id"];
 			if (string.IsNullOrEmpty(text))
 			{
 				return RespondResult(false, "参数无效。");
@@ -419,7 +420,7 @@ namespace Sheng.Enterprise.Web.Areas.Api.Controllers
 			}
 			feedback.Domain = UserContext.Domain.Id;
 			feedback.User = UserContext.User.Id;
-			feedback.IP = HttpContext.Request.UserHostAddress;
+			feedback.IP = HttpContext?.Features?.Get<IHttpConnectionFeature>()?.RemoteIpAddress?.ToString();
 			feedback.Time = DateTime.Now;
 			_settingsManager.Feedback(feedback);
 			return RespondResult();

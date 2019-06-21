@@ -2,9 +2,9 @@ using Sheng.Enterprise.Core;
 using Sheng.Enterprise.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Sheng.Enterprise.Web.Areas.Api.Controllers
+namespace Enterprise.Web.Areas.Api.Controllers
 {
 	public class DomainController : EnterpriseController
 	{
@@ -33,7 +33,7 @@ namespace Sheng.Enterprise.Web.Areas.Api.Controllers
 		[HttpPost]
 		public ActionResult GetOrganization()
 		{
-			string input = Request.QueryString["id"];
+			string input = Request.Query["id"];
 			Organization organization = _domainManager.GetOrganization(Guid.Parse(input));
 			return RespondDataResult(organization);
 		}
@@ -69,7 +69,7 @@ namespace Sheng.Enterprise.Web.Areas.Api.Controllers
 		[HttpPost]
 		public ActionResult RemoveOrganization()
 		{
-			string input = Request.QueryString["id"];
+			string input = Request.Query["id"];
 			_domainManager.RemoveOrganization(Guid.Parse(input));
 			return RespondResult();
 		}
@@ -77,7 +77,7 @@ namespace Sheng.Enterprise.Web.Areas.Api.Controllers
 		[HttpPost]
 		public ActionResult GetOrganizationList()
 		{
-			string input = Request.QueryString["domainId"];
+			string input = Request.Query["domainId"];
 			List<Organization> organizationList = _domainManager.GetOrganizationList(Guid.Parse(input));
 			return RespondDataResult(organizationList);
 		}

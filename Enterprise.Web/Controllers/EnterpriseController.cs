@@ -5,21 +5,22 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Sheng.Enterprise.Web
+namespace Enterprise.Web
 {
     public class EnterpriseController : Controller
     {
         public UserContext UserContext { get; set; }
 
-        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             base.OnActionExecuting(filterContext);
-            if (filterContext.ActionDescriptor.GetCustomAttributes(typeof(AllowedAnonymous), false).Length != 0)
+            /*if (filterContext.ActionDescriptor.AttributeRouteInfo.GetCustomAttributes(typeof(AllowAnonymous), false).Length != 0)
             {
                 return;
-            }
+            }*/
 
             this.UserContext = SessionContainer.GetUserContext(filterContext.HttpContext);
             if (this.UserContext == null)
@@ -46,7 +47,7 @@ namespace Sheng.Enterprise.Web
 
         protected T RequestArgs<T>() where T : class
         {
-            return JsonConvert.DeserializeObject<T>(new StreamReader(HttpContext.Request.InputStream).ReadToEnd());
+            return JsonConvert.DeserializeObject<T>(new StreamReader(HttpContext.Request.Body).ReadToEnd());
         }
 
 
@@ -75,7 +76,6 @@ namespace Sheng.Enterprise.Web
 		{
 			return new ContentResult
 			{
-				ContentEncoding = Encoding.UTF8,
 				Content = JsonHelper.NewtonsoftSerializer(apiResult)
 			};
 		}

@@ -1,7 +1,7 @@
 using Sheng.Enterprise.Infrastructure;
 using System;
 
-namespace Sheng.Enterprise.Web.Models
+namespace Enterprise.Web.Models
 {
 	public class OrganizationViewModel
 	{

@@ -1,9 +1,11 @@
 using Sheng.Enterprise.Core;
 using Sheng.Enterprise.Infrastructure;
 using System;
-using System.Web.Mvc;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Sheng.Enterprise.Web.Areas.Api.Controllers
+namespace Enterprise.Web.Areas.Api.Controllers
 {
 	public class UserController : EnterpriseController
 	{
@@ -11,7 +13,7 @@ namespace Sheng.Enterprise.Web.Areas.Api.Controllers
 
 		private static readonly DomainManager _domainManager = DomainManager.Instance;
 
-		[AllowedAnonymous]
+		[AllowAnonymous]
 		public ActionResult Register()
 		{
 			UserRegisterArgs userRegisterArgs = RequestArgs<UserRegisterArgs>();
@@ -19,7 +21,12 @@ namespace Sheng.Enterprise.Web.Areas.Api.Controllers
 			{
 				return RespondResult(false, "参数无效。");
 			}
-			if (Session["ValidateCode"] == null || Session["ValidateCode"].ToString() != userRegisterArgs.ValidateCode)
+
+            if (!HttpContext.Session.TryGetValue("ValidateCode", out var value))
+            {
+                return RespondResult(false, "验证码无效。");
+            }
+			if (Encoding.UTF8.GetString(value) != userRegisterArgs.ValidateCode)
 			{
 				return RespondResult(false, "验证码无效。");
 			}
@@ -117,7 +124,7 @@ namespace Sheng.Enterprise.Web.Areas.Api.Controllers
 
 		public ActionResult Remove()
 		{
-			Guid guid = Guid.Parse(Request.QueryString["id"]);
+			Guid guid = Guid.Parse(Request.Query["id"]);
 			if (guid == UserContext.User.Id)
 			{
 				return RespondResult(false, "您不能删除自己。");
@@ -128,12 +135,12 @@ namespace Sheng.Enterprise.Web.Areas.Api.Controllers
 
 		public ActionResult ResetPasswordToDefault()
 		{
-			string input = Request.QueryString["id"];
+			string input = Request.Query["id"];
 			_userManager.ResetPasswordToDefault(Guid.Parse(input));
 			return RespondResult();
 		}
 
-		[AllowedAnonymous]
+		[AllowAnonymous]
 		public ActionResult ResetPassword()
 		{
 			ResetPasswordArgs resetPasswordArgs = RequestArgs<ResetPasswordArgs>();

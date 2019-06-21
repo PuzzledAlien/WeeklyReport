@@ -1,9 +1,10 @@
 using Sheng.Enterprise.Core;
 using Sheng.Enterprise.Infrastructure;
-using System;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Sheng.Enterprise.Web.Areas.Api.Controllers
+namespace Enterprise.Web.Areas.Api.Controllers
 {
 	public class UserContextController : EnterpriseController
 	{
@@ -11,7 +12,7 @@ namespace Sheng.Enterprise.Web.Areas.Api.Controllers
 
 		private static readonly DomainManager _domainManager = DomainManager.Instance;
 
-		[AllowedAnonymous]
+		[AllowAnonymous]
 		public ActionResult Login()
 		{
 			LoginArgs loginArgs = RequestArgs<LoginArgs>();
@@ -40,12 +41,12 @@ namespace Sheng.Enterprise.Web.Areas.Api.Controllers
 			return RespondResult();
 		}
 
-		[AllowedAnonymous]
+		[AllowAnonymous]
 		public ActionResult GetValidateCode()
 		{
 			ValidateCode code = new ValidateCode();
 			string text = code.CreateValidateCode(5);
-			Session["ValidateCode"] = text;
+            HttpContext.Session.SetString("ValidateCode", text);
 			byte[] fileContents = code.CreateValidateGraphic(text);
 			return File(fileContents, "image/jpeg");
 		}

@@ -5,9 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 
 
-namespace Sheng.Enterprise.Web
+namespace Enterprise.Web
 {
     public class CustomerHelpers
     {

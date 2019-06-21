@@ -1,9 +1,10 @@
 using Sheng.Enterprise.Core;
-using Sheng.Enterprise.Web.Models;
+using Enterprise.Web.Models;
 using System;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Sheng.Enterprise.Web.Controllers
+namespace Enterprise.Web.Controllers
 {
 	public class HomeController : EnterpriseController
 	{
@@ -11,7 +12,7 @@ namespace Sheng.Enterprise.Web.Controllers
 
 		private static readonly DomainManager _domainManager = DomainManager.Instance;
 
-		[AllowedAnonymous]
+		[AllowAnonymous]
 		public ActionResult Login()
 		{
 			LoginViewModel model = new LoginViewModel();
@@ -24,14 +25,14 @@ namespace Sheng.Enterprise.Web.Controllers
 			return RedirectToAction("Login");
 		}
 
-		[AllowedAnonymous]
+		[AllowAnonymous]
 		public ActionResult Register()
 		{
 			RegisterViewModel model = new RegisterViewModel();
 			return View(model);
 		}
 
-		[AllowedAnonymous]
+		[AllowAnonymous]
 		public ActionResult ResetPassword()
 		{
 			return View();
@@ -42,7 +43,7 @@ namespace Sheng.Enterprise.Web.Controllers
 			return View();
 		}
 
-		[AllowedAnonymous]
+		[AllowAnonymous]
 		public ActionResult ErrorView()
 		{
 			return View();

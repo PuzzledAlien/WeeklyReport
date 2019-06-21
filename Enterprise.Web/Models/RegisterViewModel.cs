@@ -1,6 +1,6 @@
 using System;
 
-namespace Sheng.Enterprise.Web
+namespace Enterprise.Web
 {
 	public class RegisterViewModel
 	{

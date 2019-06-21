@@ -2,7 +2,7 @@ using Sheng.Enterprise.Infrastructure;
 using System;
 using System.Collections.Generic;
 
-namespace Sheng.Enterprise.Web.Models
+namespace Enterprise.Web.Models
 {
 	public class CheckRelationViewModel
 	{

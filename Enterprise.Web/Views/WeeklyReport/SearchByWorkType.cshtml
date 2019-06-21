@@ -1,4 +1,4 @@
-﻿@model Sheng.Enterprise.Web.Models.SearchByWorkTypeViewModel
+﻿@model Enterprise.Web.Models.SearchByWorkTypeViewModel
 
 @{
     ViewBag.Title = "查询";
@@ -12,8 +12,8 @@
 
 <script>
 
-    var _workType = getQueryString('workType');
-    var _workTask = getQueryString('workTask');
+    var _workType = getQuery('workType');
+    var _workTask = getQuery('workTask');
 
     $(document).ready(function () {
 

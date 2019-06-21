@@ -2,15 +2,21 @@ using Sheng.Enterprise.Core;
 using Sheng.Enterprise.Infrastructure;
 using System;
 using System.IO;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Sheng.Enterprise.Web.Areas.Api.Controllers
+namespace Enterprise.Web.Areas.Api.Controllers
 {
 	public class WeeklyReportController : EnterpriseController
 	{
 		private static readonly WeeklyReportManager _weeklyReportManager = WeeklyReportManager.Instance;
+        private readonly IWebHostEnvironment _environment;
+        public WeeklyReportController(IWebHostEnvironment environment)
+        {
+            _environment = environment;
+        }
 
-		public ActionResult Post()
+        public ActionResult Post()
 		{
 			WeeklyReport weeklyReport = base.RequestArgs<WeeklyReport>();
 			weeklyReport.Domain = base.UserContext.Domain.Id;
@@ -57,7 +63,7 @@ namespace Sheng.Enterprise.Web.Areas.Api.Controllers
 
 		public ActionResult Uncheck()
 		{
-			string input = base.Request.QueryString["id"];
+			string input = base.Request.Query["id"];
 			WeeklyReportController._weeklyReportManager.Uncheck(Guid.Parse(input));
 			return this.RespondResult();
 		}
@@ -65,7 +71,7 @@ namespace Sheng.Enterprise.Web.Areas.Api.Controllers
 		public ActionResult ExportByPersonal()
 		{
 			ExportByPersonalArgs args = base.RequestArgs<ExportByPersonalArgs>();
-			FileInfo fileInfo = new FileInfo(ExcelHelper.ExportPersonal(base.Server.MapPath("/"), args));
+			FileInfo fileInfo = new FileInfo(ExcelHelper.ExportPersonal(_environment.ContentRootPath, args));
 			return this.RespondDataResult(fileInfo.Name);
 		}
 
@@ -73,7 +79,7 @@ namespace Sheng.Enterprise.Web.Areas.Api.Controllers
 		{
 			ExportByWorkTypeArgs exportByWorkTypeArgs = base.RequestArgs<ExportByWorkTypeArgs>();
 			exportByWorkTypeArgs.Domain = base.UserContext.Domain.Id;
-			FileInfo fileInfo = new FileInfo(ExcelHelper.ExportWorkType(base.Server.MapPath("/"), exportByWorkTypeArgs));
+			FileInfo fileInfo = new FileInfo(ExcelHelper.ExportWorkType(_environment.ContentRootPath, exportByWorkTypeArgs));
 			return this.RespondDataResult(fileInfo.Name);
 		}
 
@@ -81,7 +87,7 @@ namespace Sheng.Enterprise.Web.Areas.Api.Controllers
 		{
 			ExportByOrganizationArgs exportByOrganizationArgs = base.RequestArgs<ExportByOrganizationArgs>();
 			exportByOrganizationArgs.Domain = base.UserContext.Domain.Id;
-			FileInfo fileInfo = new FileInfo(ExcelHelper.ExportOrganization(base.Server.MapPath("/"), exportByOrganizationArgs));
+			FileInfo fileInfo = new FileInfo(ExcelHelper.ExportOrganization(_environment.ContentRootPath, exportByOrganizationArgs));
 			return this.RespondDataResult(fileInfo.Name);
 		}
 	}

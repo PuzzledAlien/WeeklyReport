@@ -1,7 +1,7 @@
-using System;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace Sheng.Enterprise.Web
+namespace Enterprise.Web
 {
 	public class AuthorizationFilter : ActionFilterAttribute
 	{

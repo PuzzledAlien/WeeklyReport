@@ -1,4 +1,3 @@
-using System;
 using System.Web.Optimization;
 
 namespace Sheng.Enterprise.Web

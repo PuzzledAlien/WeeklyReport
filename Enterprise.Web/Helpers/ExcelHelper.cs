@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Sheng.Enterprise.Web
+namespace Enterprise.Web
 {
 	public class ExcelHelper
 	{

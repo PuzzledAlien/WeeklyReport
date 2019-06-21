@@ -1,7 +1,7 @@
 using System;
 using System.Data;
 
-namespace Sheng.Enterprise.Web.Models
+namespace Enterprise.Web.Models
 {
 	public class ReportByOrganizationViewModel
 	{

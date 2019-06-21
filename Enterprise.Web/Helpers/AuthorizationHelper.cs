@@ -1,8 +1,7 @@
 using Sheng.Enterprise.Infrastructure;
-using System;
-using System.Web;
+using Microsoft.AspNetCore.Http;
 
-namespace Sheng.Enterprise.Web
+namespace Enterprise.Web
 {
 	public static class AuthorizationHelper
 	{

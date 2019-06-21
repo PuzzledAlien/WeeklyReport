@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Linkup.DataRelationalMappin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Linkup.Data", "Linkup.Data\Linkup.Data.csproj", "{75901595-6F1A-4101-8909-59FDF89168DB}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Enterprise.Web", "Enterprise.Web\Enterprise.Web.csproj", "{AA1D688C-BFCB-44F4-915D-0660C56FF787}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,12 +47,16 @@ Global
 		{75901595-6F1A-4101-8909-59FDF89168DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75901595-6F1A-4101-8909-59FDF89168DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75901595-6F1A-4101-8909-59FDF89168DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA1D688C-BFCB-44F4-915D-0660C56FF787}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA1D688C-BFCB-44F4-915D-0660C56FF787}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA1D688C-BFCB-44F4-915D-0660C56FF787}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA1D688C-BFCB-44F4-915D-0660C56FF787}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.NetCore.6.1.15-rc\lib\NET45;packages\EnterpriseLibrary.Data.NetCore.6.1.10-rc\lib\NET45;packages\EnterpriseLibrary.Logging.NetCore.6.1.7-rc\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.NetCore.6.1.8-rc\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.Logging.NetCore.6.1.8-rc\lib\NET45
 		SolutionGuid = {0591196D-CDC4-40E2-BEB0-2EBD251C3DC6}
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.NetCore.6.1.15-rc\lib\NET45;packages\EnterpriseLibrary.Data.NetCore.6.1.10-rc\lib\NET45;packages\EnterpriseLibrary.Logging.NetCore.6.1.7-rc\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.NetCore.6.1.8-rc\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.Logging.NetCore.6.1.8-rc\lib\NET45
 	EndGlobalSection
 EndGlobal

@@ -1,14 +1,14 @@
 using Microsoft.CSharp.RuntimeBinder;
 using Sheng.Enterprise.Core;
 using Sheng.Enterprise.Infrastructure;
-using Sheng.Enterprise.Web.Models;
+using Enterprise.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Sheng.Enterprise.Web.Controllers
+namespace Enterprise.Web.Controllers
 {
 	public class WeeklyReportController : EnterpriseController
 	{
@@ -30,13 +30,13 @@ namespace Sheng.Enterprise.Web.Controllers
 			int weekOfYear = DateTimeHelper.GetWeekOfYear(DateTime.Now);
 			postViewModel.CurrentWeekOfYear = weekOfYear;
 			int year = DateTime.Now.Year;
-			string text = Request.QueryString["year"];
+			string text = Request.Query["year"];
 			if (!string.IsNullOrEmpty(text))
 			{
 				int.TryParse(text, out year);
 			}
 			int month = DateTime.Now.Month;
-			string text2 = Request.QueryString["month"];
+			string text2 = Request.Query["month"];
 			if (!string.IsNullOrEmpty(text2))
 			{
 				int.TryParse(text2, out month);
@@ -46,7 +46,7 @@ namespace Sheng.Enterprise.Web.Controllers
 				month = DateTime.Now.Month;
 			}
 			postViewModel.WeekList = DateTimeHelper.GetWeekListOfMonth(year, month);
-			int weekOfYear2 = DateTimeHelper.GetWeekOfYear(Request.QueryString["week"], postViewModel.WeekList);
+			int weekOfYear2 = DateTimeHelper.GetWeekOfYear(Request.Query["week"], postViewModel.WeekList);
 			postViewModel.Year = year;
 			postViewModel.Month = month;
 			postViewModel.WeekOfYear = weekOfYear2;
@@ -131,7 +131,7 @@ namespace Sheng.Enterprise.Web.Controllers
 		public ActionResult SearchByOrganization()
 		{
 			SearchByOrganizationViewModel searchByOrganizationViewModel = new SearchByOrganizationViewModel();
-			string text = Request.QueryString["organizationId"];
+			string text = Request.Query["organizationId"];
 			if (string.IsNullOrEmpty(text))
 			{
 				searchByOrganizationViewModel.OrganizationId = UserContext.Organization.Id;
@@ -154,13 +154,13 @@ namespace Sheng.Enterprise.Web.Controllers
 			int weekOfYear = DateTimeHelper.GetWeekOfYear(DateTime.Now);
 			searchByOrganizationViewModel.CurrentWeekOfYear = weekOfYear;
 			int year = DateTime.Now.Year;
-			string text2 = Request.QueryString["year"];
+			string text2 = Request.Query["year"];
 			if (!string.IsNullOrEmpty(text2))
 			{
 				int.TryParse(text2, out year);
 			}
 			int month = DateTime.Now.Month;
-			string text3 = Request.QueryString["month"];
+			string text3 = Request.Query["month"];
 			if (!string.IsNullOrEmpty(text3))
 			{
 				int.TryParse(text3, out month);
@@ -170,7 +170,7 @@ namespace Sheng.Enterprise.Web.Controllers
 				month = DateTime.Now.Month;
 			}
 			searchByOrganizationViewModel.WeekList = DateTimeHelper.GetWeekListOfMonth(year, month);
-			int weekOfYear2 = DateTimeHelper.GetWeekOfYear(Request.QueryString["week"], searchByOrganizationViewModel.WeekList);
+			int weekOfYear2 = DateTimeHelper.GetWeekOfYear(Request.Query["week"], searchByOrganizationViewModel.WeekList);
 			searchByOrganizationViewModel.Year = year;
 			searchByOrganizationViewModel.Month = month;
 			searchByOrganizationViewModel.WeekOfYear = weekOfYear2;
@@ -184,7 +184,7 @@ namespace Sheng.Enterprise.Web.Controllers
 		public ActionResult SearchByPersonal()
 		{
 			SearchByPersonalViewModel searchByPersonalViewModel = new SearchByPersonalViewModel();
-			string text = Request.QueryString["userId"];
+			string text = Request.Query["userId"];
 			if (string.IsNullOrEmpty(text))
 			{
 				searchByPersonalViewModel.UserId = UserContext.User.Id;
@@ -193,28 +193,28 @@ namespace Sheng.Enterprise.Web.Controllers
 			else
 			{
 				searchByPersonalViewModel.UserId = Guid.Parse(text);
-				searchByPersonalViewModel.UserName = Request.QueryString["userName"];
+				searchByPersonalViewModel.UserName = Request.Query["userName"];
 			}
 			int year = DateTime.Now.Year;
-			string text2 = Request.QueryString["startYear"];
+			string text2 = Request.Query["startYear"];
 			if (!string.IsNullOrEmpty(text2))
 			{
 				int.TryParse(text2, out year);
 			}
 			int month = DateTime.Now.Month;
-			string text3 = Request.QueryString["startMonth"];
+			string text3 = Request.Query["startMonth"];
 			if (!string.IsNullOrEmpty(text3))
 			{
 				int.TryParse(text3, out month);
 			}
 			int year2 = DateTime.Now.Year;
-			string text4 = Request.QueryString["endYear"];
+			string text4 = Request.Query["endYear"];
 			if (!string.IsNullOrEmpty(text4))
 			{
 				int.TryParse(text4, out year2);
 			}
 			int month2 = DateTime.Now.Month;
-			string text5 = Request.QueryString["endMonth"];
+			string text5 = Request.Query["endMonth"];
 			if (!string.IsNullOrEmpty(text5))
 			{
 				int.TryParse(text5, out month2);
@@ -239,13 +239,13 @@ namespace Sheng.Enterprise.Web.Controllers
 			int weekOfYear = DateTimeHelper.GetWeekOfYear(DateTime.Now);
 			searchByWorkTypeViewModel.CurrentWeekOfYear = weekOfYear;
 			int year = DateTime.Now.Year;
-			string text = Request.QueryString["year"];
+			string text = Request.Query["year"];
 			if (!string.IsNullOrEmpty(text))
 			{
 				int.TryParse(text, out year);
 			}
 			int month = DateTime.Now.Month;
-			string text2 = Request.QueryString["month"];
+			string text2 = Request.Query["month"];
 			if (!string.IsNullOrEmpty(text2))
 			{
 				int.TryParse(text2, out month);
@@ -255,13 +255,13 @@ namespace Sheng.Enterprise.Web.Controllers
 				month = DateTime.Now.Month;
 			}
 			searchByWorkTypeViewModel.WeekList = DateTimeHelper.GetWeekListOfMonth(year, month);
-			int weekOfYear2 = DateTimeHelper.GetWeekOfYear(Request.QueryString["week"], searchByWorkTypeViewModel.WeekList);
+			int weekOfYear2 = DateTimeHelper.GetWeekOfYear(Request.Query["week"], searchByWorkTypeViewModel.WeekList);
 			searchByWorkTypeViewModel.Year = year;
 			searchByWorkTypeViewModel.Month = month;
 			searchByWorkTypeViewModel.WeekOfYear = weekOfYear2;
 			searchByWorkTypeViewModel.WorkTypeList = _settingsManager.GetUserWorkTypeList(UserContext.User.Id);
 			searchByWorkTypeViewModel.WorkTaskList = _settingsManager.GetWorkTaskList(UserContext.Domain.Id);
-			string text3 = Request.QueryString["workType"];
+			string text3 = Request.Query["workType"];
 			if (text3 == "null")
 			{
 				text3 = null;
@@ -271,7 +271,7 @@ namespace Sheng.Enterprise.Web.Controllers
 			{
 				workType = new Guid?(Guid.Parse(text3));
 			}
-			string text4 = Request.QueryString["workTask"];
+			string text4 = Request.Query["workTask"];
 			Guid? workTask = null;
 			if (!string.IsNullOrEmpty(text4))
 			{
@@ -298,13 +298,13 @@ namespace Sheng.Enterprise.Web.Controllers
 			int weekOfYear = DateTimeHelper.GetWeekOfYear(DateTime.Now);
 			checkViewModel.CurrentWeekOfYear = weekOfYear;
 			int year = DateTime.Now.Year;
-			string text = Request.QueryString["year"];
+			string text = Request.Query["year"];
 			if (!string.IsNullOrEmpty(text))
 			{
 				int.TryParse(text, out year);
 			}
 			int month = DateTime.Now.Month;
-			string text2 = Request.QueryString["month"];
+			string text2 = Request.Query["month"];
 			if (!string.IsNullOrEmpty(text2))
 			{
 				int.TryParse(text2, out month);
@@ -314,11 +314,11 @@ namespace Sheng.Enterprise.Web.Controllers
 				month = DateTime.Now.Month;
 			}
 			checkViewModel.WeekList = DateTimeHelper.GetWeekListOfMonth(year, month);
-			int weekOfYear2 = DateTimeHelper.GetWeekOfYear(Request.QueryString["week"], checkViewModel.WeekList);
+			int weekOfYear2 = DateTimeHelper.GetWeekOfYear(Request.Query["week"], checkViewModel.WeekList);
 			checkViewModel.Year = year;
 			checkViewModel.Month = month;
 			checkViewModel.WeekOfYear = weekOfYear2;
-			string value = Request.QueryString["checkViewType"];
+			string value = Request.Query["checkViewType"];
 			CheckViewType checkViewType;
 			if (!string.IsNullOrEmpty(value) && Enum.TryParse<CheckViewType>(value, out checkViewType))
 			{
@@ -335,7 +335,7 @@ namespace Sheng.Enterprise.Web.Controllers
 		public ActionResult ReportByOrganization()
 		{
 			ReportByOrganizationViewModel reportByOrganizationViewModel = new ReportByOrganizationViewModel();
-			string text = Request.QueryString["organizationId"];
+			string text = Request.Query["organizationId"];
 			if (string.IsNullOrEmpty(text))
 			{
 				reportByOrganizationViewModel.OrganizationId = UserContext.RootOrganization.Id;
@@ -356,25 +356,25 @@ namespace Sheng.Enterprise.Web.Controllers
 				}
 			}
 			int year = DateTime.Now.Year;
-			string text2 = Request.QueryString["startYear"];
+			string text2 = Request.Query["startYear"];
 			if (!string.IsNullOrEmpty(text2))
 			{
 				int.TryParse(text2, out year);
 			}
 			int month = DateTime.Now.Month;
-			string text3 = Request.QueryString["startMonth"];
+			string text3 = Request.Query["startMonth"];
 			if (!string.IsNullOrEmpty(text3))
 			{
 				int.TryParse(text3, out month);
 			}
 			int year2 = DateTime.Now.Year;
-			string text4 = Request.QueryString["endYear"];
+			string text4 = Request.Query["endYear"];
 			if (!string.IsNullOrEmpty(text4))
 			{
 				int.TryParse(text4, out year2);
 			}
 			int month2 = DateTime.Now.Month;
-			string text5 = Request.QueryString["endMonth"];
+			string text5 = Request.Query["endMonth"];
 			if (!string.IsNullOrEmpty(text5))
 			{
 				int.TryParse(text5, out month2);
@@ -394,7 +394,7 @@ namespace Sheng.Enterprise.Web.Controllers
 		public ActionResult ReportBySubmit()
 		{
 			ReportBySubmitViewModel reportBySubmitViewModel = new ReportBySubmitViewModel();
-			string text = Request.QueryString["organizationId"];
+			string text = Request.Query["organizationId"];
 			if (string.IsNullOrEmpty(text))
 			{
 				reportBySubmitViewModel.OrganizationId = UserContext.RootOrganization.Id;
@@ -417,13 +417,13 @@ namespace Sheng.Enterprise.Web.Controllers
 			int weekOfYear = DateTimeHelper.GetWeekOfYear(DateTime.Now);
 			reportBySubmitViewModel.CurrentWeekOfYear = weekOfYear;
 			int year = DateTime.Now.Year;
-			string text2 = Request.QueryString["year"];
+			string text2 = Request.Query["year"];
 			if (!string.IsNullOrEmpty(text2))
 			{
 				int.TryParse(text2, out year);
 			}
 			int month = DateTime.Now.Month;
-			string text3 = Request.QueryString["month"];
+			string text3 = Request.Query["month"];
 			if (!string.IsNullOrEmpty(text3))
 			{
 				int.TryParse(text3, out month);
@@ -433,7 +433,7 @@ namespace Sheng.Enterprise.Web.Controllers
 				month = DateTime.Now.Month;
 			}
 			reportBySubmitViewModel.WeekList = DateTimeHelper.GetWeekListOfMonth(year, month);
-			int weekOfYear2 = DateTimeHelper.GetWeekOfYear(Request.QueryString["week"], reportBySubmitViewModel.WeekList);
+			int weekOfYear2 = DateTimeHelper.GetWeekOfYear(Request.Query["week"], reportBySubmitViewModel.WeekList);
 			reportBySubmitViewModel.Year = year;
 			reportBySubmitViewModel.Month = month;
 			reportBySubmitViewModel.WeekOfYear = weekOfYear2;
