@@ -31,6 +31,8 @@ namespace Enterprise.Web
                 options.CheckConsentNeeded = context => true;
             });
 
+            services.AddDistributedMemoryCache();
+            services.AddSession();
 
             services.AddControllersWithViews()
                 .AddNewtonsoftJson();
@@ -48,6 +50,8 @@ namespace Enterprise.Web
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseSession();
 
             app.UseStaticFiles();
 
