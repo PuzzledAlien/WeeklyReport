@@ -1,9 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{E3217E3E-19AD-4AE1-AD3C-1D9F6A0BA50B}</ProjectGuid>
-    <RootNamespace>Linkup.DataRelationalMapping</RootNamespace>
-    <AssemblyName>Linkup.DataRelationalMapping</AssemblyName>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.1;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Linkup.Common\Linkup.Common.csproj" />

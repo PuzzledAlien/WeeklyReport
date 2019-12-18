@@ -1,9 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{7A6DD850-1725-4238-B03D-EC94A87C392E}</ProjectGuid>
-    <RootNamespace>Sheng.Enterprise.Infrastructure</RootNamespace>
-    <AssemblyName>Sheng.Enterprise.Infrastructure</AssemblyName>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.1;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Linkup.Data\Linkup.Data.csproj" />
