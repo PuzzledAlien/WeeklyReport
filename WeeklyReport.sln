@@ -56,7 +56,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.NetCore.6.1.15-rc\lib\NET45;packages\EnterpriseLibrary.Data.NetCore.6.1.10-rc\lib\NET45;packages\EnterpriseLibrary.Logging.NetCore.6.1.7-rc\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.NetCore.6.1.8-rc\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.Logging.NetCore.6.1.8-rc\lib\NET45;packages\EnterpriseLibrary.Common.NetCore.6.3.0\lib\NET45;packages\EnterpriseLibrary.Data.NetCore.6.3.2\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.NetCore.6.3.0\lib\NET45;packages\EnterpriseLibrary.Logging.NetCore.6.3.2\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.Logging.NetCore.6.3.0\lib\NET45
 		SolutionGuid = {0591196D-CDC4-40E2-BEB0-2EBD251C3DC6}
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.NetCore.6.1.15-rc\lib\NET45;packages\EnterpriseLibrary.Data.NetCore.6.1.10-rc\lib\NET45;packages\EnterpriseLibrary.Logging.NetCore.6.1.7-rc\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.NetCore.6.1.8-rc\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.Logging.NetCore.6.1.8-rc\lib\NET45
 	EndGlobalSection
 EndGlobal

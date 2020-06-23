@@ -5,16 +5,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/common")
-    @*@Scripts.Render("~/bundles/layer")*@
+    <link rel="stylesheet" href="~/Content/css" />
+    <script src="~/bundles/jquery"></script>
+    <script src="~/bundles/jqueryval"></script>
+    <script src="~/bundles/common"></script>
 
-    @Scripts.Render("~/Scripts/layer/layer.js")
-    @Scripts.Render("~/Scripts/laytpl.js")
-    @Scripts.Render("~/Scripts/laypage/laypage.js")
-    @Scripts.Render("~/Scripts/json2.js")
+    <script src="~/Scripts/layer/layer.js"></script>
+    <script src="~/Scripts/laytpl.js"></script>
+    <script src="~/Scripts/laypage/laypage.js"></script>
+    <script src="~/Scripts/json2.js"></script>
 
     <script type="text/javascript">
         //layer.config({
@@ -22,8 +21,7 @@
         //    skin: 'layer-ext-espresso' //一旦设定，所有弹层风格都采用此主题。
         //});
 
-        function showMask()
-        {
+        function showMask() {
             //$(document).find("#divContent *").each(function ()
             //{
             //    $(this).attr("disabled", "disabled");
@@ -32,8 +30,7 @@
             $("#divContentMask").show();
         }
 
-        function hideMask()
-        {
+        function hideMask() {
             $("#divContentMask").hide();
         }
 

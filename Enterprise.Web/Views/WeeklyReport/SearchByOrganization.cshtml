@@ -1,4 +1,6 @@
 ﻿@model Enterprise.Web.Models.SearchByOrganizationViewModel
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
 
 @{
     ViewBag.Title = "查询";
@@ -48,7 +50,7 @@
 
 
         $(".weeklyReportItem").change(function () {
-            
+
             var checkedCount = 0;
             $(".weeklyReportItem").each(function (index, element) {
                 if ($(element).is(':checked')) {
@@ -144,7 +146,7 @@
 </script>
 
 <div style="margin-right:20px;margin-bottom:20px;">
-    @Helpers.TitleWithDate("查询", this.ViewBag)
+    @CustomerHelpers.TitleWithDate("查询", this.ViewBag)
     <div style="margin-top:20px">
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
@@ -152,7 +154,7 @@
                     @Html.ActionLink("按个人", "SearchByPersonal", "WeeklyReport", null, new { @class = "a_black_16" })
                 </td>
                 <td class="td_ContentTab_active">按组织架构</td>
-                @if (AuthorizationHelper.Verify("WeeklyReport_SearchByWorkType", HttpContext.Current))
+                @if (AuthorizationHelper.Verify("WeeklyReport_SearchByWorkType", HttpContextAccessor.HttpContext))
                 {
                     <td class="td_ContentTab">
                         @Html.ActionLink("按项目", "SearchByWorkType", "WeeklyReport", null, new { @class = "a_black_16" })
@@ -171,13 +173,13 @@
             组织架构：
         </div>
         <div style="float:left; margin-left:20px;">
-            @if (AuthorizationHelper.Verify("WeeklyReport_SearchByAllOrganization", HttpContext.Current))
+            @if (AuthorizationHelper.Verify("WeeklyReport_SearchByAllOrganization", HttpContextAccessor.HttpContext))
             {
-                @Helpers.OrganizationSelector("organizationSelector", null, null, Model.OrganizationId, Model.OrganizationName)
+                @CustomerHelpers.OrganizationSelector("organizationSelector", null, null, Model.OrganizationId, Model.OrganizationName)
             }
             else
             {
-                @Helpers.OrganizationSelector("organizationSelector", null, null, Model.OrganizationId, Model.OrganizationName, false)
+                @CustomerHelpers.OrganizationSelector("organizationSelector", null, null, Model.OrganizationId, Model.OrganizationName, false)
             }
         </div>
         <div style="float:left; line-height:34px;margin-left:20px;">
@@ -204,7 +206,7 @@
                     </td>
                     <td>
                         <select id="selectMonth" class="input_18">
-                           
+
                             @if (Model.Year == DateTime.Now.Year)
                             {
                                 for (int i = 1; i < 12; i++)
@@ -327,7 +329,8 @@
                                     <td class="tdSearchWeeklyReportItem">@item.WorkTaskName</td>
                                     <td class="tdSearchWeeklyReportItem">@Html.Raw(item.Content)</td>
                                     <td class="tdSearchWeeklyReportItem">@item.StatusName</td>
-                                    <td class="tdSearchWeeklyReportItem">@if (item.Date.HasValue) {@item.Date.Value.ToString("yyyy-MM-dd") }</td>
+                                    <td class="tdSearchWeeklyReportItem">@if (item.Date.HasValue)
+                                    {@item.Date.Value.ToString("yyyy-MM-dd")}</td>
                                     @*<td class="tdSearchWeeklyReportItem">@Html.Raw(item.Remark)</td>*@
                                     @*<td class="tdSearchWeeklyReportItem">@item.Time</td>*@
                                 </tr>
@@ -342,33 +345,33 @@
                                         <td>已阅</td>
                                     </tr>
                                     @*<tr>
-                                        <td valign="top">
-                                            <div>
-                                                @foreach (var item in weeklyReport.CheckPointList)
-                                                {
-                                                    <div style="float:left; line-height:34px;margin-right:20px;">
-                                                        @item.CheckPointName：@item.CheckPointItemName（@item.Score）
-                                                    </div>
-                                                }
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    @if (String.IsNullOrEmpty(weeklyReport.CheckRemark) == false)
-                                    {
-                                        <tr>
-                                            <td valign="bottom" height="10"></td>
-                                        </tr>
-                                        <tr>
                                             <td valign="top">
-                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                                    <tr>
-                                                        <td width="100">审核意见：</td>
-                                                        <td>@weeklyReport.CheckRemark</td>
-                                                    </tr>
-                                                </table>
+                                                <div>
+                                                    @foreach (var item in weeklyReport.CheckPointList)
+                                                    {
+                                                        <div style="float:left; line-height:34px;margin-right:20px;">
+                                                            @item.CheckPointName：@item.CheckPointItemName（@item.Score）
+                                                        </div>
+                                                    }
+                                                </div>
                                             </td>
                                         </tr>
-                                    }*@
+                                        @if (String.IsNullOrEmpty(weeklyReport.CheckRemark) == false)
+                                        {
+                                            <tr>
+                                                <td valign="bottom" height="10"></td>
+                                            </tr>
+                                            <tr>
+                                                <td valign="top">
+                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                        <tr>
+                                                            <td width="100">审核意见：</td>
+                                                            <td>@weeklyReport.CheckRemark</td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        }*@
                                 </table>
                             </div>
                         }

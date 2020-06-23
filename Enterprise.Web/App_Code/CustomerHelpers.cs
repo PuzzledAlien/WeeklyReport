@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Enterprise.Web.Helpers;
+using Microsoft.AspNetCore.Mvc.Razor;
+using System;
 using System.Globalization;
-using System.Web.WebPages;
-
+using System.Threading.Tasks;
 
 namespace Enterprise.Web
 {
@@ -74,6 +75,8 @@ namespace Enterprise.Web
                 HelperPage.WriteLiteralTo(x, " = layer.open({\n                type: 2,\n                area: ['500px', '430px'], //宽高\n                closeBtn: false,\n                title: \"选择\",\n                shift: _layerShift,\n                content: '/Unity/OrganizationSelector?domId=' + domId\n            });\n        }\n\n        function selectOrganization(domId, id, name) {\n            $(\"#span_\" + domId).html(name);\n            $(\"#\" + domId).val(id);\n\n            layer.close(_organizationSelectorLayerIndex_");
                 HelperPage.WriteTo(x, domId);
                 HelperPage.WriteLiteralTo(x, ");\n            //layer.closeAll();\n\n            $(\"#\" + domId).change();\n        }\n\n\n    </script>\n");
+
+                return Task.CompletedTask;
             });
         }
         /// <summary>
@@ -148,6 +151,8 @@ namespace Enterprise.Web
                 HelperPage.WriteLiteralTo(x, " = layer.open({\n                type: 2,\n                area: ['740px', '530px'], //宽高\n                closeBtn: false,\n                title: \"选择\",\n                shift: _layerShift,\n                content: '/Unity/PersonSelector?domId=' + domId\n            });\n        }\n\n\n        function selectPerson(domId, id, name)\n        {\n            $(\"#span_\" + domId).html(name);\n            $(\"#\" + domId).val(id);\n\n            layer.close(_personSelectorLayerIndex_");
                 HelperPage.WriteTo(x, domId);
                 HelperPage.WriteLiteralTo(x, ");\n            // layer.closeAll();\n\n            $(\"#\" + domId).change();\n        }\n\n    </script>\n");
+
+                return Task.CompletedTask;
             });
         }
         /// <summary>
@@ -186,6 +191,8 @@ namespace Enterprise.Web
                 HelperPage.WriteLiteralTo(x, "</span>\n                </div>\n            </div>\n            <div");
                 HelperPage.WriteLiteralTo(x, " style=\"clear:both\"");
                 HelperPage.WriteLiteralTo(x, "></div>\n        </div>\n    </div>\n");
+
+                return Task.CompletedTask;
             });
         }
     }

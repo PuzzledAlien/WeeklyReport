@@ -31,12 +31,15 @@ namespace Enterprise.Web
                 options.CheckConsentNeeded = context => true;
             });
 
+            services.AddHttpContextAccessor();
+
             services.AddDistributedMemoryCache();
             services.AddSession();
 
             services.AddControllersWithViews()
                 .AddNewtonsoftJson();
             services.AddRazorPages();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

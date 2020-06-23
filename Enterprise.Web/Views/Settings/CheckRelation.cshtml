@@ -414,7 +414,7 @@
                     <tr>
                         <td width="100" height="50">考核人：</td>
                         <td>
-                            @Helpers.PersonSelector("checkerSelector", null, null, ViewBag.RootOrganization.Id, ViewBag.RootOrganization.Name)
+                            @CustomerHelpers.PersonSelector("checkerSelector", null, null, ViewBag.RootOrganization.Id, ViewBag.RootOrganization.Name)
                         </td>
                     </tr>
                     <tr>
@@ -422,7 +422,7 @@
                         <td>
                             @*<div>
                                 <div style="float:left">
-                                    @Helpers.PersonSelector("staffSelector", null, null, ViewBag.Domain.Id, ViewBag.Domain.Name)
+                                    @PersonSelector("staffSelector", null, null, ViewBag.Domain.Id, ViewBag.Domain.Name)
                                 </div>
                                 <div style="float:left;margin-left:10px;height:32px; line-height:32px;">
                                     <input name="btnAddStaff" id="btnAddStaff" type="button" class="btn_blue" value="添加" onclick="addStaff()" />

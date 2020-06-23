@@ -4,9 +4,8 @@
     Layout = "~/Views/Shared/_LayoutBasal.cshtml";
 }
 
-@Styles.Render("~/Content/zTreeStyle/zTreeStyle.css")
-@Scripts.Render("~/Scripts/ztree/jquery.ztree.core-3.5.min.js")
-
+<link rel="stylesheet" href="~/Content/zTreeStyle/zTreeStyle.css" />
+<script src="~/Scripts/ztree/jquery.ztree.core-3.5.min.js"></script>
 
 <style type="text/css">
     .ztree li span.button.switch.level0 {
@@ -149,7 +148,7 @@
             {
               //  alert(data);
                 layer.close(layerIndex);
-               
+
                 if (data.Success)
                 {
                     //$.each(data.Data.UserList, function (n, value)
@@ -219,7 +218,7 @@
     function closePersonSelector()
     {
         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-        parent.layer.close(index); //再执行关闭   
+        parent.layer.close(index); //再执行关闭
     }
 
     function scrollHeader() {
@@ -335,7 +334,7 @@
                     </tr>
                 </table>
 
-               
+
             </td>
         </tr>
     </table>
@@ -346,8 +345,8 @@
 
 
     @*<div style="float:left;">
-        <input name="btnSave" type="button" class="btn_red" id="btnSave" value="删 除" />
-    </div>*@
+            <input name="btnSave" type="button" class="btn_red" id="btnSave" value="删 除" />
+        </div>*@
 
     <div style="float:right">
         <input type="button" class="btn_blue" value="取 消" style="margin-left:1px;" onclick="closePersonSelector()" />
