@@ -20,7 +20,7 @@ namespace Linkup.Common
 
         private readonly LogWriter _writer;
 
-        private LogService()
+        public LogService()
         {
             //http://www.cnblogs.com/theonewu/p/4045049.html
             //http://entlib.codeplex.com/discussions/442089
