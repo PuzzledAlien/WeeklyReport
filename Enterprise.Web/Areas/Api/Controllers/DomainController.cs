@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Enterprise.Web.Areas.Api.Controllers
 {
+	[Area("api")]
 	public class DomainController : EnterpriseController
 	{
 		private DomainManager _domainManager = DomainManager.Instance;
