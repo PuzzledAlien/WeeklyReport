@@ -3,6 +3,8 @@
     <TargetFrameworks>netstandard2.1;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="5.2.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="EnterpriseLibrary.Common.NetCore" Version="6.3.0" />
     <PackageReference Include="EnterpriseLibrary.Data.NetCore" Version="6.3.2" />
     <PackageReference Include="EnterpriseLibrary.ExceptionHandling.Logging.NetCore" Version="6.3.0" />
@@ -11,5 +13,6 @@
     <PackageReference Include="EnterpriseLibrary.Logging.NetCore" Version="6.3.2" />
     <PackageReference Include="Gma.QrCodeNet.Encoding" Version="2.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.1" />
   </ItemGroup>
 </Project>
