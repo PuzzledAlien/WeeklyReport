@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sheng.Enterprise.Core;
+using System;
 
 namespace Enterprise.Web
 {
@@ -34,7 +35,13 @@ namespace Enterprise.Web
             services.AddHttpContextAccessor();
 
             services.AddDistributedMemoryCache();
-            services.AddSession();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
             services.AddControllersWithViews()
                 .AddNewtonsoftJson();
@@ -54,8 +61,6 @@ namespace Enterprise.Web
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseSession();
-
             app.UseStaticFiles();
 
             app.UseCookiePolicy();
@@ -63,6 +68,8 @@ namespace Enterprise.Web
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
