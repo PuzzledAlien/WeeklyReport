@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Enterprise.Web.Areas.Api.Controllers
 {
+	[Area("api")]
 	public class UserContextController : EnterpriseController
 	{
 		private static readonly UserManager _userManager = UserManager.Instance;
