@@ -49,7 +49,8 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return this.RespondDataResult(data);
 		}
 
-		public ActionResult Check()
+		[HttpPost("Api/WeeklyReport/Check")]
+		public ActionResult CheckWeeklyReport()
 		{
 			CheckResult checkResult = base.RequestArgs<CheckResult>();
 			checkResult.Checker = base.UserContext.User.Id;
