@@ -1,3 +1,4 @@
+using Enterprise.Web.Constraints;
 using Linkup.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,7 +11,7 @@ namespace Enterprise.Web
 {
     public class Startup
     {
-        private readonly LogService _logService = LogService.Instance;
+        private static LogService _logService = LogService.Instance;
 
         private ExceptionHandlingService _exceptionHandling = ServiceUnity.Instance.ExceptionHandling;
         public Startup(IConfiguration configuration)
@@ -24,7 +25,7 @@ namespace Enterprise.Web
         public void ConfigureServices(IServiceCollection services)
         {
             _logService.Write("Application_Start");
-            
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -62,33 +63,24 @@ namespace Enterprise.Web
 
             app.UseRouting();
 
-            app.UseRouter(router =>
-            {
-                router.MapRoute("Default", "{controller}/{action}", new
-                {
-                    controller = "WeeklyReport",
-                    action = "Post"
-                }, new string[]
-                {
-                    "Enterprise.Web.Controllers"
-                });
-
-                router.MapRoute("Api_default", "Api/{controller}/{action}", new
-                {
-                    action = "Index"
-                }, new string[]
-                {
-                    "Enterprise.Web.Areas.Api.Controllers"
-                });
-            });
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    name : "Default",
+                    pattern:"{controller}/{action}", 
+                    defaults: new { controller = "WeeklyReport", action = "Post" }
+                    //,constraints: "Enterprise.Web.Controllers"
+                    );
+                endpoints.MapControllerRoute(
+                    name: "Api_default", 
+                    pattern:"Api/{controller}/{action}",
+                    defaults: new { action = "Index" },
+                    constraints: new { area = "api" }
+                    );
+                endpoints.MapDefaultControllerRoute();
                 endpoints.MapRazorPages();
             });
         }
