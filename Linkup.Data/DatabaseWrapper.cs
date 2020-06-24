@@ -424,22 +424,22 @@ namespace Linkup.Data
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="obj"></param>
-        public bool Fill<T>(object obj) where T : class,new()
+        public bool Fill<T>(object obj) where T : class, new()
         {
             return Fill<T>(obj, null, null);
         }
 
-        public bool Fill<T>(object obj, Dictionary<string, object> attachedWhere) where T : class,new()
+        public bool Fill<T>(object obj, Dictionary<string, object> attachedWhere) where T : class, new()
         {
             return Fill<T>(obj, null, null);
         }
 
-        public bool Fill<T>(object obj, string table) where T : class,new()
+        public bool Fill<T>(object obj, string table) where T : class, new()
         {
             return Fill<T>(obj, table, null);
         }
 
-        public bool Fill<T>(object obj, string table, Dictionary<string, object> attachedWhere) where T : class,new()
+        public bool Fill<T>(object obj, string table, Dictionary<string, object> attachedWhere) where T : class, new()
         {
             SqlExpressionArgs args = new SqlExpressionArgs();
             args.Table = table;
@@ -475,32 +475,32 @@ namespace Linkup.Data
         }
 
 
-        public List<T> Select<T>() where T : class,new()
+        public List<T> Select<T>() where T : class, new()
         {
             return Select<T>(new Dictionary<string, object>(), null);
         }
 
-        public List<T> Select<T>(Dictionary<string, object> attachedWhere) where T : class,new()
+        public List<T> Select<T>(Dictionary<string, object> attachedWhere) where T : class, new()
         {
             return Select<T>(AttachedWhereItem.Parse(attachedWhere), null);
         }
 
-        public List<T> Select<T>(Dictionary<string, object> attachedWhere, SqlExpressionPagingArgs pagingArgs) where T : class,new()
+        public List<T> Select<T>(Dictionary<string, object> attachedWhere, SqlExpressionPagingArgs pagingArgs) where T : class, new()
         {
             return Select<T>(AttachedWhereItem.Parse(attachedWhere), pagingArgs);
         }
 
-        public List<T> Select<T>(List<AttachedWhereItem> attachedWhere) where T : class,new()
+        public List<T> Select<T>(List<AttachedWhereItem> attachedWhere) where T : class, new()
         {
             return Select<T>(attachedWhere, null);
         }
 
-        public List<T> Select<T>(SqlExpressionPagingArgs pagingArgs) where T : class,new()
+        public List<T> Select<T>(SqlExpressionPagingArgs pagingArgs) where T : class, new()
         {
             return Select<T>(new List<AttachedWhereItem>(), pagingArgs);
         }
 
-        public List<T> Select<T>(List<AttachedWhereItem> attachedWhere, SqlExpressionPagingArgs pagingArgs) where T : class,new()
+        public List<T> Select<T>(List<AttachedWhereItem> attachedWhere, SqlExpressionPagingArgs pagingArgs) where T : class, new()
         {
             SqlExpressionArgs args = new SqlExpressionArgs();
             args.Type = SqlExpressionType.Select;
@@ -558,7 +558,6 @@ namespace Linkup.Data
 
             SqlExpressionArgs args = new SqlExpressionArgs();
             args.Type = SqlExpressionType.Insert;
-
             SqlExpression sqlExpression = RelationalMappingUnity.GetSqlExpression(obj, args);
             return ExcuteSqlExpression(sqlExpression) == 1;
         }
@@ -703,6 +702,6 @@ namespace Linkup.Data
             return list;
         }
 
-       
+
     }
 }
