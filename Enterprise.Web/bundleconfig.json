@@ -1,15 +1,52 @@
 [
   {
-    "outputFileName": "wwwroot/bundles/jquery",
+    "outputFileName": "wwwroot/bundles/jquery.js",
     "inputFiles": [
-      "wwwroot/css/site.css",
-      "wwwroot/css/custom.css"
+      "wwwroot/Scripts/jquery-3.4.1.js"
     ]
   },
   {
-    "outputFileName": "wwwroot/js/site.min.js",
+    "outputFileName": "wwwroot/bundles/jqueryval.js",
     "inputFiles": [
-      "wwwroot/js/site.js"
+      "wwwroot/Scripts/validate/jquery.validate.js",
+      "wwwroot/Scripts/validate/localization/messages_zh.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/bundles/modernizr.js",
+    "inputFiles": [
+      "wwwroot/Scripts/modernizr-*"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/bundles/common.js",
+    "inputFiles": [
+      "wwwroot/Scripts/common.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/bundles/ztree.js",
+    "inputFiles": [
+      "wwwroot/Scripts/ztree/jquery.ztree.core-3.5.min.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Content/ztree.css",
+    "inputFiles": [
+      "wwwroot/Content/zTreeStyle/zTreeStyle.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/Content/css.css",
+    "inputFiles": [
+      "wwwroot/Content/Style.css",
+      "wwwroot/Content/WeeklyReport.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/bundles/layer.js",
+    "inputFiles": [
+      "wwwroot/Scripts/layer/layer.js"
     ],
     "minify": {
       "enabled": true,

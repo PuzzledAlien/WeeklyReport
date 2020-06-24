@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Enterprise.Web.Areas.Api.Controllers
 {
-	[Area("api")]
 	public class WeeklyReportController : EnterpriseController
 	{
 		private static readonly WeeklyReportManager _weeklyReportManager = WeeklyReportManager.Instance;
@@ -17,7 +16,8 @@ namespace Enterprise.Web.Areas.Api.Controllers
             _environment = environment;
         }
 
-        public ActionResult Post()
+		[HttpPost("Api/{controller}/Post")]
+        public ActionResult PostWeeklyReport()
 		{
 			WeeklyReport weeklyReport = base.RequestArgs<WeeklyReport>();
 			weeklyReport.Domain = base.UserContext.Domain.Id;

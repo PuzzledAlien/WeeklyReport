@@ -1,4 +1,3 @@
-using Enterprise.Web.Constraints;
 using Linkup.Common;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -69,10 +68,9 @@ namespace Enterprise.Web
             {
                 endpoints.MapControllers();
                 endpoints.MapControllerRoute(
-                    name : "Default",
-                    pattern:"{controller}/{action}", 
+                    name: "Default",
+                    pattern: "{controller}/{action}",
                     defaults: new { controller = "WeeklyReport", action = "Post" }
-                    //,constraints: "Enterprise.Web.Controllers"
                     );
                 endpoints.MapControllerRoute(
                     name: "Api_default", 

@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Enterprise.Web.Areas.Api.Controllers
 {
-	[Area("api")]
 	public class SettingsController : EnterpriseController
 	{
 		private SettingsManager _settingsManager = SettingsManager.Instance;

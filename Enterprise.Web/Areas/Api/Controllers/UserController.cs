@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Enterprise.Web.Areas.Api.Controllers
 {
-	[Area("api")]
 	public class UserController : EnterpriseController
 	{
 		private UserManager _userManager = UserManager.Instance;

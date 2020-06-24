@@ -79,10 +79,6 @@
     <None Include="wwwroot\Scripts\esm\popper.min.js" />
     <None Include="wwwroot\Scripts\esm\popper.min.js.map" />
     <None Include="wwwroot\Scripts\index.d.ts" />
-    <None Include="wwwroot\Scripts\jquery-1.10.2.intellisense.js" />
-    <None Include="wwwroot\Scripts\jquery-1.10.2.js" />
-    <None Include="wwwroot\Scripts\jquery-1.10.2.min.js" />
-    <None Include="wwwroot\Scripts\jquery-1.10.2.min.map" />
     <None Include="wwwroot\Scripts\jquery-3.4.1.intellisense.js" />
     <None Include="wwwroot\Scripts\jquery-3.4.1.js" />
     <None Include="wwwroot\Scripts\jquery-3.4.1.min.js" />
@@ -265,6 +261,7 @@
 
 
   <ItemGroup>
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.447" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.5" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.5" />
     <PackageReference Include="NPOI" Version="2.5.1" />
@@ -282,6 +279,34 @@
     <Folder Include="wwwroot\bundles\jqueryval\" />
     <Folder Include="wwwroot\bundles\layer\" />
     <Folder Include="wwwroot\bundles\modernizr\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Content Update="wwwroot\bundles\common">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\bundles\jquery">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\bundles\jqueryval">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\bundles\layer">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\bundles\modernizr">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\bundles\ztree">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Content\css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\Content\ztree">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

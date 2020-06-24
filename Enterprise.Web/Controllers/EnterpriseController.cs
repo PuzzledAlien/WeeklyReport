@@ -4,9 +4,9 @@ using Sheng.Enterprise.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Enterprise.Web
 {
@@ -17,10 +17,16 @@ namespace Enterprise.Web
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             base.OnActionExecuting(filterContext);
-            /*if (filterContext.ActionDescriptor.AttributeRouteInfo.GetCustomAttributes(typeof(AllowAnonymous), false).Length != 0)
+            if(filterContext.ActionDescriptor.EndpointMetadata != null)
             {
-                return;
-            }*/
+                foreach(var obj in filterContext.ActionDescriptor.EndpointMetadata)
+                {
+                    if(obj is AllowAnonymousAttribute )
+                    {
+                        return;
+                    }
+                }
+            }
 
             this.UserContext = SessionContainer.GetUserContext(filterContext.HttpContext);
             if (this.UserContext == null)
@@ -47,7 +53,7 @@ namespace Enterprise.Web
 
         protected T RequestArgs<T>() where T : class
         {
-            return JsonConvert.DeserializeObject<T>(new StreamReader(HttpContext.Request.Body).ReadToEnd());
+            return JsonConvert.DeserializeObject<T>(new StreamReader(HttpContext.Request.Body).ReadToEndAsync().Result);
         }
 
 

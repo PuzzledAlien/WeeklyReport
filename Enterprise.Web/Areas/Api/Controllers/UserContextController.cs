@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Enterprise.Web.Areas.Api.Controllers
 {
-	[Area("api")]
 	public class UserContextController : EnterpriseController
 	{
 		private static readonly UserManager _userManager = UserManager.Instance;
@@ -14,6 +13,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 		private static readonly DomainManager _domainManager = DomainManager.Instance;
 
 		[AllowAnonymous]
+		[HttpPost("Api/{controller}/{action}")]
 		public ActionResult Login()
 		{
 			LoginArgs loginArgs = RequestArgs<LoginArgs>();

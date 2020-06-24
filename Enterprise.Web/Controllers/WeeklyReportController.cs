@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Enterprise.Web.Controllers
 {
-    public class WeeklyReportController : EnterpriseController
+    public partial class WeeklyReportController : EnterpriseController
     {
         private static readonly SettingsManager _settingsManager = SettingsManager.Instance;
 
@@ -25,6 +25,7 @@ namespace Enterprise.Web.Controllers
             return View();
         }
 
+        [HttpGet("/WeeklyReport/Post")]
         public ActionResult Post()
         {
             PostViewModel postViewModel = new PostViewModel();
