@@ -296,6 +296,7 @@ namespace Enterprise.Web.Controllers
         }
 
         [AuthorizationFilter("WeeklyReport_Check")]
+        [HttpGet("/WeeklyReport/Check")]
         public ActionResult Check()
         {
             CheckViewModel checkViewModel = new CheckViewModel();
