@@ -43,6 +43,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 		}
 
 		[AllowAnonymous]
+		[HttpGet("Api/UserContext/GetValidateCode")]
 		public ActionResult GetValidateCode()
 		{
 			ValidateCode code = new ValidateCode();
