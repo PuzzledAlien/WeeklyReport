@@ -241,3 +241,4 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 *.pubxml
+Enterprise.Web/.config/dotnet-tools.json
