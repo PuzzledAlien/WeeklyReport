@@ -62,6 +62,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult(apiResult);
 		}
 
+		[HttpPost("Api/User/GetUserList")]
 		public ActionResult GetUserList()
 		{
 			GetUserListArgs getUserListArgs = RequestArgs<GetUserListArgs>();
@@ -74,6 +75,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondDataResult(userList);
 		}
 
+		[HttpPost("Api/User/Update")]
 		public ActionResult Update()
 		{
 			UserDto userDto = RequestArgs<UserDto>();
@@ -98,6 +100,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult(apiResult);
 		}
 
+		[HttpPost("Api/User/Create")]
 		public ActionResult Create()
 		{
 			UserDto userDto = RequestArgs<UserDto>();
@@ -123,6 +126,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult(apiResult);
 		}
 
+		[HttpPost("Api/User/Remove")]
 		public ActionResult Remove()
 		{
 			Guid guid = Guid.Parse(Request.Query["id"]);
@@ -134,6 +138,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult();
 		}
 
+		[HttpPost("Api/User/ResetPasswordToDefault")]
 		public ActionResult ResetPasswordToDefault()
 		{
 			string input = Request.Query["id"];
@@ -141,6 +146,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult();
 		}
 
+		[HttpPost("Api/User/ResetPassword")]
 		[AllowAnonymous]
 		public ActionResult ResetPassword()
 		{
@@ -161,6 +167,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult(apiResult);
 		}
 
+		[HttpPost("Api/User/UpdatePassword")]
 		public ActionResult UpdatePassword()
 		{
 			UpdatePasswordArgs updatePasswordArgs = RequestArgs<UpdatePasswordArgs>();
