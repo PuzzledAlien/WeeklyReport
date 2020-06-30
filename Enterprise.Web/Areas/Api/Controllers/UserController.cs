@@ -14,6 +14,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 		private static readonly DomainManager _domainManager = DomainManager.Instance;
 
 		[AllowAnonymous]
+		[HttpPost("Api/User/Register")]
 		public ActionResult Register()
 		{
 			UserRegisterArgs userRegisterArgs = RequestArgs<UserRegisterArgs>();
