@@ -11,7 +11,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 	{
 		private SettingsManager _settingsManager = SettingsManager.Instance;
 
-		[HttpPost]
+		[HttpPost("Api/Settings/CreateJobTitle")]
 		public ActionResult CreateJobTitle()
 		{
 			JobTitle jobTitle = RequestArgs<JobTitle>();
@@ -27,7 +27,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			});
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/UpdateJobTitle")]
 		public ActionResult UpdateJobTitle()
 		{
 			JobTitle jobTitle = RequestArgs<JobTitle>();
@@ -39,7 +39,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult();
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/RemoveJobTitle")]
 		public ActionResult RemoveJobTitle()
         {
             string text = Request.Query["id"];
@@ -51,7 +51,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult();
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/CreateJobLevel")]
 		public ActionResult CreateJobLevel()
 		{
 			JobLevel jobLevel = RequestArgs<JobLevel>();
@@ -67,7 +67,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			});
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/UpdateJobLevel")]
 		public ActionResult UpdateJobLevel()
 		{
 			JobLevel jobLevel = RequestArgs<JobLevel>();
@@ -79,7 +79,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult();
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/RemoveJobLevel")]
 		public ActionResult RemoveJobLevel()
 		{
 			string text = Request.Query["id"];
@@ -91,7 +91,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult();
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/CreateOfficeLocation")]
 		public ActionResult CreateOfficeLocation()
 		{
 			OfficeLocation officeLocation = RequestArgs<OfficeLocation>();
@@ -107,7 +107,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			});
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/UpdateOfficeLocation")]
 		public ActionResult UpdateOfficeLocation()
 		{
 			OfficeLocation officeLocation = RequestArgs<OfficeLocation>();
@@ -119,7 +119,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult();
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/RemoveOfficeLocation")]
 		public ActionResult RemoveOfficeLocation()
 		{
 			string text = Request.Query["id"];
@@ -131,7 +131,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult();
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/CreateWorkType")]
 		public ActionResult CreateWorkType()
 		{
 			WorkType workType = RequestArgs<WorkType>();
@@ -147,7 +147,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			});
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/UpdateWorkType")]
 		public ActionResult UpdateWorkType()
 		{
 			WorkType workType = RequestArgs<WorkType>();
@@ -159,7 +159,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult();
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/RemoveWorkType")]
 		public ActionResult RemoveWorkType()
 		{
 			string text = Request.Query["id"];
@@ -171,7 +171,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult();
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/CreateWorkTask")]
 		public ActionResult CreateWorkTask()
 		{
 			WorkTask workTask = RequestArgs<WorkTask>();
@@ -187,7 +187,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			});
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/UpdateWorkTask")]
 		public ActionResult UpdateWorkTask()
 		{
 			WorkTask workTask = RequestArgs<WorkTask>();
@@ -199,7 +199,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult();
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/RemoveWorkTask")]
 		public ActionResult RemoveWorkTask()
 		{
 			string text = Request.Query["id"];
@@ -211,7 +211,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult();
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/CreateWorkStatus")]
 		public ActionResult CreateWorkStatus()
 		{
 			WorkStatus workStatus = RequestArgs<WorkStatus>();
@@ -227,7 +227,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			});
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/UpdateWorkStatus")]
 		public ActionResult UpdateWorkStatus()
 		{
 			WorkStatus workStatus = RequestArgs<WorkStatus>();
@@ -239,7 +239,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult();
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/RemoveWorkStatus")]
 		public ActionResult RemoveWorkStatus()
 		{
 			string text = Request.Query["id"];
@@ -251,7 +251,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult();
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/CreateCheckRelation")]
 		public ActionResult CreateCheckRelation()
 		{
 			CheckRelationJsonContract checkRelationJsonContract = RequestArgs<CheckRelationJsonContract>();
@@ -264,7 +264,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult();
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/RemoveCheckRelation")]
 		public ActionResult RemoveCheckRelation()
 		{
 			string text = Request.Query["checker"];
@@ -276,7 +276,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult();
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/GetCheckStaffList")]
 		public ActionResult GetCheckStaffList()
 		{
 			string text = Request.Query["checker"];
@@ -288,7 +288,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondDataResult(checkStaffList);
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/CreateRole")]
 		public ActionResult CreateRole()
 		{
 			Role role = RequestArgs<Role>();
@@ -305,7 +305,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			});
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/UpdateRole")]
 		public ActionResult UpdateRole()
 		{
 			Role role = RequestArgs<Role>();
@@ -318,7 +318,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult();
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/RemoveRole")]
 		public ActionResult RemoveRole()
 		{
 			string text = Request.Query["id"];
@@ -330,7 +330,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult();
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/GetRole")]
 		public ActionResult GetRole()
 		{
 			string text = Request.Query["id"];
@@ -342,7 +342,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondDataResult(role);
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/GetAuthorizationListByRoleId")]
 		public ActionResult GetAuthorizationListByRoleId()
 		{
 			string text = Request.Query["id"];
@@ -354,7 +354,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondDataResult(authorizationListByRoleId);
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/UpdateAuthorizationListByRoleId")]
 		public ActionResult UpdateAuthorizationListByRoleId()
 		{
 			RoleAuthorizationRelation roleAuthorizationRelation = RequestArgs<RoleAuthorizationRelation>();
@@ -367,7 +367,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult();
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/AddUserToRole")]
 		public ActionResult AddUserToRole()
 		{
 			List<RoleUser> list = RequestArgs<List<RoleUser>>();
@@ -386,7 +386,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult();
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/RemoveUserFromRole")]
 		public ActionResult RemoveUserFromRole()
 		{
 			RoleUser roleUser = RequestArgs<RoleUser>();
@@ -398,7 +398,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult();
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Settings/GetUserListByRoleId")]
 		public ActionResult GetUserListByRoleId()
 		{
 			string text = Request.Query["id"];
@@ -410,7 +410,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondDataResult(userListByRoleId);
 		}
 
-		[HttpPost]
+		[HttpGet("Api/Settings/Feedback")]
 		public ActionResult Feedback()
 		{
 			Feedback feedback = RequestArgs<Feedback>();
