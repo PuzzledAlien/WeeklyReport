@@ -30,7 +30,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult();
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Domain/GetOrganization")]
 		public ActionResult GetOrganization()
 		{
 			string input = Request.Query["id"];
@@ -38,7 +38,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondDataResult(organization);
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Domain/UpdateOrganization")]
 		public ActionResult UpdateOrganization()
 		{
 			Organization organization = RequestArgs<Organization>();
@@ -50,7 +50,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult();
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Domain/CreateOrganization")]
 		public ActionResult CreateOrganization()
 		{
 			Organization organization = RequestArgs<Organization>();
@@ -66,7 +66,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			});
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Domain/RemoveOrganization")]
 		public ActionResult RemoveOrganization()
 		{
 			string input = Request.Query["id"];
@@ -74,7 +74,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondResult();
 		}
 
-		[HttpPost]
+		[HttpPost("Api/Domain/GetOrganizationList")]
 		public ActionResult GetOrganizationList()
 		{
 			string input = Request.Query["domainId"];
@@ -82,6 +82,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondDataResult(organizationList);
 		}
 
+		[HttpPost("Api/Domain/MoveOrganization")]
 		public ActionResult MoveOrganization(Guid id, Guid id2)
 		{
 			_domainManager.SwapSort(id, id2, "Organization");
