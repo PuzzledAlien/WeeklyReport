@@ -159,10 +159,10 @@
         @foreach (var item in Model.WorkTypeList)
         {
             <text>
-        var optionObj = new Option('@item.Name', '@item.Id', false, true);
-        document.getElementById('selectWorkType_' + _rowIndex).options.add(optionObj);
-        document.getElementById('selectWorkType_' + _rowIndex).selectedIndex = 0;
-        </text>
+                var optionObj = new Option('@item.Name', '@item.Id', false, true);
+                document.getElementById('selectWorkType_' + _rowIndex).options.add(optionObj);
+                document.getElementById('selectWorkType_' + _rowIndex).selectedIndex = 0;
+           </text>
         }
 
         $("#selectWorkType_" + _rowIndex).rules("add", {
@@ -590,34 +590,34 @@
                 <td style="color:red">当前周报处于已阅状态，不可进行修改。</td>
             </tr>
             @*<tr>
-                <td valign="top">
-                    <div>
-                        @foreach (var item in Model.WeeklyReport.CheckPointList)
-                        {
-                            <div style="float: left; line-height: 34px; margin-right: 20px;">
-                                @item.CheckPointName：@item.CheckPointItemName（@item.Score）
-                            </div>
-                        }
-                    </div>
-                </td>
-            </tr>
-
-            @if (String.IsNullOrEmpty(Model.WeeklyReport.CheckRemark) == false)
-            {
-                <tr>
-                    <td valign="bottom" height="10"></td>
-                </tr>
-                <tr>
                     <td valign="top">
-                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                            <tr>
-                                <td width="100">审核意见：</td>
-                                <td>@Model.WeeklyReport.CheckRemark</td>
-                            </tr>
-                        </table>
+                        <div>
+                            @foreach (var item in Model.WeeklyReport.CheckPointList)
+                            {
+                                <div style="float: left; line-height: 34px; margin-right: 20px;">
+                                    @item.CheckPointName：@item.CheckPointItemName（@item.Score）
+                                </div>
+                            }
+                        </div>
                     </td>
                 </tr>
-            }*@
+
+                @if (String.IsNullOrEmpty(Model.WeeklyReport.CheckRemark) == false)
+                {
+                    <tr>
+                        <td valign="bottom" height="10"></td>
+                    </tr>
+                    <tr>
+                        <td valign="top">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td width="100">审核意见：</td>
+                                    <td>@Model.WeeklyReport.CheckRemark</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                }*@
         </table>
     </div>
 }
