@@ -53,6 +53,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return File(fileContents, "image/jpeg");
 		}
 
+		[HttpGet("Api/UserContext/Heartbeat")]
 		public ActionResult Heartbeat()
 		{
 			return RespondResult();
