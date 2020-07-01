@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sheng.Enterprise.Core;
 using System;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 namespace Enterprise.Web
 {
@@ -47,6 +49,7 @@ namespace Enterprise.Web
                 .AddNewtonsoftJson();
             services.AddRazorPages();
 
+            services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
