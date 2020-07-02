@@ -242,3 +242,4 @@ ModelManifest.xml
 .fake/
 *.pubxml
 Enterprise.Web/.config/dotnet-tools.json
+*.xls
