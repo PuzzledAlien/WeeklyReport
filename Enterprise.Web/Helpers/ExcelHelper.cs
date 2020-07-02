@@ -101,13 +101,17 @@ namespace Enterprise.Web
 						}
 						num++;
 					}
-					CellRangeAddress region = new CellRangeAddress(firstRow, num - 1, 0, 0);
-					sheet.AddMergedRegion(region);
-					region = new CellRangeAddress(firstRow, num - 1, 1, 1);
-					sheet.AddMergedRegion(region);
-					region = new CellRangeAddress(firstRow, num - 1, 2, 2);
-					sheet.AddMergedRegion(region);
-				}
+
+                    if (num - 1 > 2)
+                    {
+                        CellRangeAddress region = new CellRangeAddress(firstRow, num - 1, 0, 0);
+                        sheet.AddMergedRegion(region);
+                        region = new CellRangeAddress(firstRow, num - 1, 1, 1);
+                        sheet.AddMergedRegion(region);
+                        region = new CellRangeAddress(firstRow, num - 1, 2, 2);
+                        sheet.AddMergedRegion(region);
+					}
+                }
 				text3 = Path.Combine(rootPath, "ExcelExport", text2 + "(" + DateTime.Now.ToString("ddHHmmss") + ").xls");
 				fileStream = new FileStream(text3, FileMode.OpenOrCreate, FileAccess.Write);
 				workbook.Write(fileStream);
@@ -236,12 +240,16 @@ namespace Enterprise.Web
 						}
 						num++;
 					}
-					CellRangeAddress region = new CellRangeAddress(firstRow, num - 1, 0, 0);
-					sheet.AddMergedRegion(region);
-					region = new CellRangeAddress(firstRow, num - 1, 1, 1);
-					sheet.AddMergedRegion(region);
-					region = new CellRangeAddress(firstRow, num - 1, 2, 2);
-					sheet.AddMergedRegion(region);
+
+                    if (num - 1 > 2)
+                    {
+                        CellRangeAddress region = new CellRangeAddress(firstRow, num - 1, 0, 0);
+                        sheet.AddMergedRegion(region);
+                        region = new CellRangeAddress(firstRow, num - 1, 1, 1);
+                        sheet.AddMergedRegion(region);
+                        region = new CellRangeAddress(firstRow, num - 1, 2, 2);
+                        sheet.AddMergedRegion(region);
+					}
 				}
 				text5 = Path.Combine(rootPath, "ExcelExport", text4 + "(" + DateTime.Now.ToString("ddHHmmss") + ").xls");
 				fileStream = new FileStream(text5, FileMode.OpenOrCreate, FileAccess.Write);
