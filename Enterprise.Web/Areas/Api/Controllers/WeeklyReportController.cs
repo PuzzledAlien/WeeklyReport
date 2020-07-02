@@ -2,6 +2,7 @@ using Sheng.Enterprise.Core;
 using Sheng.Enterprise.Infrastructure;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
@@ -72,10 +73,11 @@ namespace Enterprise.Web.Areas.Api.Controllers
 		}
 
 		[HttpPost("Api/WeeklyReport/ExportByPersonal")]		
-		public ActionResult ExportByPersonal()
+		public async ValueTask<ActionResult> ExportByPersonalAsync()
 		{
 			ExportByPersonalArgs args = base.RequestArgs<ExportByPersonalArgs>();
-			FileInfo fileInfo = new FileInfo(ExcelHelper.ExportPersonal(_environment.ContentRootPath, args));
+            var filePath = await ExcelHelper.ExportPersonalAsync(_environment.ContentRootPath, args);
+			FileInfo fileInfo = new FileInfo(filePath);
 			return this.RespondDataResult(fileInfo.Name);
 		}
 

@@ -7,6 +7,7 @@ using Sheng.Enterprise.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Enterprise.Web
 {
@@ -22,7 +23,7 @@ namespace Enterprise.Web
 
 		private static readonly DomainManager _domainManager = DomainManager.Instance;
 
-		public static string ExportPersonal(string rootPath, ExportByPersonalArgs args)
+		public static async ValueTask<string> ExportPersonalAsync(string rootPath, ExportByPersonalArgs args)
 		{
 			List<WeeklyReport> arg_2E_0 = ExcelHelper._weeklyReportManager.GetWeeklyReportListByPerson(args.User, args.StartYear, args.StartMonth, args.EndYear, args.EndMonth);
 			List<WeeklyReport> list = new List<WeeklyReport>();
@@ -126,12 +127,12 @@ namespace Enterprise.Web
 			finally
 			{
 				fileStream2.Close();
-				fileStream2.Dispose();
+                await fileStream2.DisposeAsync();
 				if (fileStream != null)
 				{
-					fileStream.Flush();
+					await fileStream.FlushAsync();
 					fileStream.Close();
-					fileStream.Dispose();
+					await fileStream.DisposeAsync();
 				}
 			}
 			return text3;
