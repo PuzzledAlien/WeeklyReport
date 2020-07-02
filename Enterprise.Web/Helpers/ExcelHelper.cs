@@ -76,6 +76,7 @@ namespace Enterprise.Web
 				foreach (WeeklyReport current3 in list)
 				{
 					int firstRow = num;
+                    var countNeedMerged = num;
 					foreach (WeeklyReportItem current4 in current3.ItemList)
 					{
 						IRow expr_234 = sheet.CreateRow(num);
@@ -102,8 +103,10 @@ namespace Enterprise.Web
 						num++;
 					}
 
-                    if (num - 1 > 2)
-                    {
+                    var needMerged = num - countNeedMerged > 1;
+
+                    if (needMerged)
+					{
                         CellRangeAddress region = new CellRangeAddress(firstRow, num - 1, 0, 0);
                         sheet.AddMergedRegion(region);
                         region = new CellRangeAddress(firstRow, num - 1, 1, 1);
@@ -215,6 +218,7 @@ namespace Enterprise.Web
 				foreach (WeeklyReport current2 in list)
 				{
 					int firstRow = num;
+                    var countNeedMerged = num;
 					foreach (WeeklyReportItem current3 in current2.ItemList)
 					{
 						IRow expr_27C = sheet.CreateRow(num);
@@ -241,8 +245,10 @@ namespace Enterprise.Web
 						num++;
 					}
 
-                    if (num - 1 > 2)
-                    {
+                    var needMerged = num - countNeedMerged > 1;
+
+                    if (needMerged)
+					{
                         CellRangeAddress region = new CellRangeAddress(firstRow, num - 1, 0, 0);
                         sheet.AddMergedRegion(region);
                         region = new CellRangeAddress(firstRow, num - 1, 1, 1);
@@ -300,11 +306,11 @@ namespace Enterprise.Web
 			{
 				workbook = new HSSFWorkbook(fileStream2);
 			}
-			ISheet sheet = null;
-			string text3;
+
+            string text3;
 			try
 			{
-				sheet = workbook.GetSheetAt(0);
+				var sheet = workbook.GetSheetAt(0);
 				string text2 = list[0].Monday.ToString("yyyyMMdd") + "-";
 				text2 += list[list.Count - 1].Sunday.ToString("yyyyMMdd");
 				text2 += "-";
@@ -320,10 +326,11 @@ namespace Enterprise.Web
 				cellStyle.VerticalAlignment = VerticalAlignment.Center;
 				cellStyle.WrapText = true;
 				int num = 2;
-				foreach (WeeklyReport current2 in list)
+                foreach (WeeklyReport current2 in list)
 				{
 					int firstRow = num;
-					foreach (WeeklyReportItem current3 in current2.ItemList)
+                    var countNeedMerged = num;
+                    foreach (WeeklyReportItem current3 in current2.ItemList)
 					{
 						IRow expr_1EF = sheet.CreateRow(num);
 						expr_1EF.Height = 350;
@@ -348,12 +355,18 @@ namespace Enterprise.Web
 						}
 						num++;
 					}
-					CellRangeAddress region = new CellRangeAddress(firstRow, num - 1, 0, 0);
-					sheet.AddMergedRegion(region);
-					region = new CellRangeAddress(firstRow, num - 1, 1, 1);
-					sheet.AddMergedRegion(region);
-					region = new CellRangeAddress(firstRow, num - 1, 2, 2);
-					sheet.AddMergedRegion(region);
+
+                    var needMerged = num - countNeedMerged > 1;
+
+                    if (needMerged)
+                    {
+                        CellRangeAddress region = new CellRangeAddress(firstRow, num - 1, 0, 0);
+                        sheet.AddMergedRegion(region);
+                        region = new CellRangeAddress(firstRow, num - 1, 1, 1);
+                        sheet.AddMergedRegion(region);
+                        region = new CellRangeAddress(firstRow, num - 1, 2, 2);
+                        sheet.AddMergedRegion(region);
+					}
 				}
 				text3 = Path.Combine(rootPath, "ExcelExport", text2 + "(" + DateTime.Now.ToString("ddHHmmss") + ").xls");
 				fileStream = new FileStream(text3, FileMode.OpenOrCreate, FileAccess.Write);
