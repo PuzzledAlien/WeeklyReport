@@ -63,6 +63,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return this.RespondResult();
 		}
 
+		[HttpPost("Api/WeeklyReport/Uncheck")]		
 		public ActionResult Uncheck()
 		{
 			string input = base.Request.Query["id"];
@@ -70,6 +71,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return this.RespondResult();
 		}
 
+		[HttpPost("Api/WeeklyReport/ExportByPersonal")]		
 		public ActionResult ExportByPersonal()
 		{
 			ExportByPersonalArgs args = base.RequestArgs<ExportByPersonalArgs>();
@@ -77,6 +79,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return this.RespondDataResult(fileInfo.Name);
 		}
 
+		[HttpPost("Api/WeeklyReport/ExportByWorkType")]		
 		public ActionResult ExportByWorkType()
 		{
 			ExportByWorkTypeArgs exportByWorkTypeArgs = base.RequestArgs<ExportByWorkTypeArgs>();
@@ -85,6 +88,7 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return this.RespondDataResult(fileInfo.Name);
 		}
 
+		[HttpPost("Api/WeeklyReport/ExportByOrganization")]				
 		public ActionResult ExportByOrganization()
 		{
 			ExportByOrganizationArgs exportByOrganizationArgs = base.RequestArgs<ExportByOrganizationArgs>();
