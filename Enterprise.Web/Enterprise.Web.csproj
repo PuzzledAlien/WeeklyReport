@@ -18,6 +18,9 @@
 
 
   <ItemGroup>
+    <None Update="ExcelExport\Todo.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="template.xls">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
