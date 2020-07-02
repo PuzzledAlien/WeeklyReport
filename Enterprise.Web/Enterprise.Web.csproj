@@ -23,9 +23,4 @@
     </None>
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Folder Include="ExcelExport\" />
-  </ItemGroup>
-
 </Project>
