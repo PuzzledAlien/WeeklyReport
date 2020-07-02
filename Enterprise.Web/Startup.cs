@@ -6,8 +6,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sheng.Enterprise.Core;
 using System;
+using System.IO;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using Microsoft.Extensions.FileProviders;
 
 namespace Enterprise.Web
 {
@@ -65,6 +67,13 @@ namespace Enterprise.Web
             }
 
             app.UseStaticFiles();
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "ExcelExport")),
+                RequestPath = "/ExcelExport"
+            });
 
             app.UseCookiePolicy();
 
