@@ -1,7 +1,7 @@
-﻿using Linkup.Common;
+using Linkup.Common;
 using Linkup.DataRelationalMapping;
-using Microsoft.Practices.EnterpriseLibrary.Data;
-using Microsoft.Practices.EnterpriseLibrary.Data.Sql;
+using Dapper;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -10,37 +10,37 @@ using System.Data.Common;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Linkup.Data
 {
     /*
      * 配合 Linkup.DataRelationalMapping 对数据库进行操作
-     * 
+     *
      */
 
     public class DatabaseWrapper
     {
-        private LogService _log = LogService.Instance;
-        private ExceptionHandlingService _exceptionHandling = ExceptionHandlingService.Instance;
-
-        private SqlDatabase _database;
+        private readonly string _connectionString;
+        private readonly LogService _log = LogService.Instance;
+        private readonly ExceptionHandlingService _exceptionHandling = ExceptionHandlingService.Instance;
 
         /// <summary>
         /// 用配置文件中 DefaultConnection 创建数据库连接
         /// </summary>
         public DatabaseWrapper()
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-            _database = new SqlDatabase(connectionString);
+            _connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         }
 
         public DatabaseWrapper(string connectionStringConfig)
         {
-            string connectionString = ConfigurationManager.ConnectionStrings[connectionStringConfig].ConnectionString;
-            _database = new SqlDatabase(connectionString);
+            _connectionString = ConfigurationManager.ConnectionStrings[connectionStringConfig].ConnectionString;
+        }
 
+        private Microsoft.Data.SqlClient.SqlConnection CreateConnection()
+        {
+            return new Microsoft.Data.SqlClient.SqlConnection(_connectionString);
         }
 
         /// <summary>
@@ -65,52 +65,15 @@ namespace Linkup.Data
 
         public int ExecuteNonQuery(CommandType commandType, string commandText, List<CommandParameter> parameterList)
         {
-            if (_database == null)
-                return 0;
-
-            DbCommand cmd;
-
-            if (commandType == CommandType.Text)
-            {
-                cmd = _database.GetSqlStringCommand(commandText);
-            }
-            else if (commandType == CommandType.StoredProcedure)
-            {
-                cmd = _database.GetStoredProcCommand(commandText);
-            }
-            else
-            {
-                throw new NotImplementedException("不支持的CommandType");
-            }
-
-            if (parameterList != null && parameterList.Count > 0)
-            {
-                foreach (CommandParameter item in parameterList)
-                {
-                    DbParameter parameter = cmd.CreateParameter();
-                    parameter.ParameterName = item.ParameterName;
-                    parameter.Value = item.Value;
-                    cmd.Parameters.Add(parameter);
-                }
-            }
-
             try
             {
-                return _database.ExecuteNonQuery(cmd);
+                using var connection = CreateConnection();
+                var parameters = ConvertToDynamicParameters(parameterList);
+                return connection.Execute(commandText, parameters, commandType: commandType == CommandType.StoredProcedure ? CommandType.StoredProcedure : CommandType.Text);
             }
             catch (Exception exception)
             {
-                string logMessage = commandText;
-                if (parameterList != null)
-                {
-                    logMessage += Environment.NewLine + JsonHelper.Serializer(parameterList);
-                }
-                logMessage += Environment.NewLine + exception.StackTrace;
-                _log.Write(exception.Message, logMessage, TraceEventType.Error);
-
-                Exception exceptionToThrow;
-                _exceptionHandling.HandleException(exception, out exceptionToThrow);
-                throw exceptionToThrow;
+                return HandleException(commandText, parameterList, exception);
             }
         }
 
@@ -136,53 +99,15 @@ namespace Linkup.Data
 
         public object ExecuteScalar(CommandType commandType, string commandText, List<CommandParameter> parameterList)
         {
-            if (_database == null)
-                return null;
-
-
-            DbCommand cmd;
-
-            if (commandType == CommandType.Text)
-            {
-                cmd = _database.GetSqlStringCommand(commandText);
-            }
-            else if (commandType == CommandType.StoredProcedure)
-            {
-                cmd = _database.GetStoredProcCommand(commandText);
-            }
-            else
-            {
-                throw new NotImplementedException("不支持的CommandType");
-            }
-
-            if (parameterList != null && parameterList.Count > 0)
-            {
-                foreach (CommandParameter item in parameterList)
-                {
-                    DbParameter parameter = cmd.CreateParameter();
-                    parameter.ParameterName = item.ParameterName;
-                    parameter.Value = item.Value;
-                    cmd.Parameters.Add(parameter);
-                }
-            }
-
             try
             {
-                return _database.ExecuteScalar(cmd);
+                using var connection = CreateConnection();
+                var parameters = ConvertToDynamicParameters(parameterList);
+                return connection.ExecuteScalar(commandText, parameters, commandType: commandType == CommandType.StoredProcedure ? CommandType.StoredProcedure : CommandType.Text);
             }
             catch (Exception exception)
             {
-                string logMessage = commandText;
-                if (parameterList != null)
-                {
-                    logMessage += Environment.NewLine + JsonHelper.Serializer(parameterList);
-                }
-                logMessage += Environment.NewLine + exception.StackTrace;
-                _log.Write(exception.Message, logMessage, TraceEventType.Error);
-
-                Exception exceptionToThrow;
-                _exceptionHandling.HandleException(exception, out exceptionToThrow);
-                throw exceptionToThrow;
+                return HandleException(commandText, parameterList, exception);
             }
         }
 
@@ -232,68 +157,21 @@ namespace Linkup.Data
         public DataSet ExecuteDataSet(CommandType commandType, string commandText,
             List<CommandParameter> parameterList, string[] tableNameArray)
         {
-            if (_database == null)
-                return null;
-
-            DbCommand cmd;
-
-            if (commandType == CommandType.Text)
-            {
-                cmd = _database.GetSqlStringCommand(commandText);
-            }
-            else if (commandType == CommandType.StoredProcedure)
-            {
-                cmd = _database.GetStoredProcCommand(commandText);
-            }
-            else
-            {
-                throw new NotImplementedException("不支持的CommandType");
-            }
-
-            if (parameterList != null && parameterList.Count > 0)
-            {
-                foreach (CommandParameter item in parameterList)
-                {
-                    DbParameter parameter = cmd.CreateParameter();
-                    parameter.ParameterName = item.ParameterName;
-                    parameter.Value = item.Value;
-                    cmd.Parameters.Add(parameter);
-                }
-            }
-
-            DataSet ds;
-
             try
             {
-                ds = _database.ExecuteDataSet(cmd);
+                using var connection = CreateConnection();
+                var parameters = ConvertToDynamicParameters(parameterList);
+
+                var reader = connection.ExecuteReader(commandText, parameters, commandType: commandType == CommandType.StoredProcedure ? CommandType.StoredProcedure : CommandType.Text);
+                var ds = new DataSet();
+                ds.Tables.Add(ConvertToDataTable(reader, tableNameArray?.FirstOrDefault() ?? "Table"));
+                return ds;
             }
             catch (Exception exception)
             {
-                string logMessage = commandText;
-                if (parameterList != null)
-                {
-                    logMessage += Environment.NewLine + JsonHelper.Serializer(parameterList);
-                }
-                logMessage += Environment.NewLine + exception.StackTrace;
-                _log.Write(exception.Message, logMessage, TraceEventType.Error);
-
-                Exception exceptionToThrow;
-                _exceptionHandling.HandleException(exception, out exceptionToThrow);
-                throw exceptionToThrow;
+                HandleException(commandText, parameterList, exception);
+                return null;
             }
-
-            if (ds != null && ds.Tables.Count > 0)
-            {
-                for (int i = 0; i < ds.Tables.Count; i++)
-                {
-                    if (tableNameArray.Length <= i)
-                        break;
-
-                    ds.Tables[i].TableName = tableNameArray[i];
-                }
-            }
-            return ds;
-
         }
 
         /// <summary>
@@ -303,34 +181,22 @@ namespace Linkup.Data
         public int ExcuteSqlExpression(SqlExpression sqlExpression)
         {
             int affectedRowCount = 0;
-            DbConnection connection = null;
+            Microsoft.Data.SqlClient.SqlConnection connection = null;
             try
             {
-                connection = _database.CreateConnection();
-                DbCommand cmd = _database.GetSqlStringCommand(sqlExpression.Sql);
-                cmd.Parameters.AddRange(sqlExpression.ParameterList.ToArray());
-                cmd.Connection = connection;
+                connection = CreateConnection();
                 connection.Open();
-                affectedRowCount = cmd.ExecuteNonQuery();
+                var parameters = ConvertToDynamicParametersFromSqlParameters(sqlExpression.ParameterList);
+                affectedRowCount = connection.Execute(sqlExpression.Sql, parameters);
             }
             catch (Exception exception)
             {
-                string logMessage = sqlExpression.ToString();
-                logMessage += Environment.NewLine + exception.StackTrace;
-                _log.Write(exception.Message, logMessage, TraceEventType.Error);
-
-                Exception exceptionToThrow;
-                _exceptionHandling.HandleException(exception, out exceptionToThrow);
-                throw exceptionToThrow;
+                HandleException(sqlExpression.ToString(), null, exception);
             }
             finally
             {
-                if (connection != null)
-                {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
-                    connection.Dispose();
-                }
+                connection?.Close();
+                connection?.Dispose();
             }
 
             return affectedRowCount;
@@ -338,11 +204,11 @@ namespace Linkup.Data
 
         public void ExcuteSqlExpression(List<SqlExpression> sqlExpressionList)
         {
-            DbConnection connection = null;
-            DbTransaction transaction = null;
+            Microsoft.Data.SqlClient.SqlConnection connection = null;
+            Microsoft.Data.SqlClient.SqlTransaction transaction = null;
             try
             {
-                connection = _database.CreateConnection();
+                connection = CreateConnection();
                 connection.Open();
                 transaction = connection.BeginTransaction();
 
@@ -350,46 +216,27 @@ namespace Linkup.Data
                 {
                     try
                     {
-                        DbCommand cmd = _database.GetSqlStringCommand(item.Sql);
-                        cmd.Parameters.AddRange(item.ParameterList.ToArray());
-                        cmd.Connection = connection;
-                        cmd.Transaction = transaction;
-                        cmd.ExecuteNonQuery();
+                        var parameters = ConvertToDynamicParametersFromSqlParameters(item.ParameterList);
+                        connection.Execute(item.Sql, parameters, transaction: transaction);
                     }
                     catch (Exception exception)
                     {
-                        if (transaction != null)
-                            transaction.Rollback();
-
-                        string logMessage = item.ToString();
-                        logMessage += Environment.NewLine + exception.StackTrace;
-                        _log.Write(exception.Message, logMessage, TraceEventType.Error);
-
-                        Exception exceptionToThrow;
-                        _exceptionHandling.HandleException(exception, out exceptionToThrow);
-                        throw exceptionToThrow;
+                        transaction?.Rollback();
+                        HandleException(item.ToString(), null, exception);
                     }
                 }
 
-                transaction.Commit();
+                transaction?.Commit();
             }
             catch (Exception exception)
             {
-                if (transaction != null)
-                    transaction.Rollback();
-
-                Exception exceptionToThrow;
-                _exceptionHandling.HandleException(exception, out exceptionToThrow);
-                throw exceptionToThrow;
+                transaction?.Rollback();
+                HandleException(null, null, exception);
             }
             finally
             {
-                if (connection != null)
-                {
-                    if (connection.State == ConnectionState.Open)
-                        connection.Close();
-                    connection.Dispose();
-                }
+                connection?.Close();
+                connection?.Dispose();
             }
         }
 
@@ -399,7 +246,7 @@ namespace Linkup.Data
                 GetCommandParameterList(sqlExpression.ParameterList), new string[] { "Table" });
         }
 
-        private List<CommandParameter> GetCommandParameterList(List<SqlParameter> list)
+        private List<CommandParameter> GetCommandParameterList(List<System.Data.SqlClient.SqlParameter> list)
         {
             List<CommandParameter> resultList = new List<CommandParameter>();
 
@@ -454,7 +301,6 @@ namespace Linkup.Data
                 args.AttachedWhere = AttachedWhereItem.Parse(attachedWhere);
             }
 
-            //不能用 default(T) ，会是null
             SqlExpression sqlExpression = RelationalMappingUnity.GetSqlExpression(obj, args);
 
             DataSet ds = ExcuteDataSetSqlExpression(sqlExpression);
@@ -508,7 +354,6 @@ namespace Linkup.Data
             args.AttachedWhere = attachedWhere;
             args.PagingArgs = pagingArgs;
 
-            //不能用 default(T) ，会是null
             SqlExpression sqlExpression = RelationalMappingUnity.GetSqlExpression(new T(), args);
 
             DataSet ds = ExcuteDataSetSqlExpression(sqlExpression);
@@ -686,22 +531,69 @@ namespace Linkup.Data
             return ExcuteSqlExpression(sqlExpression);
         }
 
-        public List<SqlParameter> CommandParameterToSqlParameter(List<CommandParameter> parameterList)
+        public List<System.Data.SqlClient.SqlParameter> CommandParameterToSqlParameter(List<CommandParameter> parameterList)
         {
-            List<SqlParameter> list = new List<SqlParameter>();
+            List<System.Data.SqlClient.SqlParameter> list = new List<System.Data.SqlClient.SqlParameter>();
 
             if (parameterList == null || parameterList.Count == 0)
                 return list;
 
             foreach (var item in parameterList)
             {
-                SqlParameter sqlParameter = new SqlParameter(item.ParameterName, item.Value);
+                System.Data.SqlClient.SqlParameter sqlParameter = new System.Data.SqlClient.SqlParameter(item.ParameterName, item.Value);
                 list.Add(sqlParameter);
             }
 
             return list;
         }
 
+        private DynamicParameters ConvertToDynamicParameters(List<CommandParameter> parameterList)
+        {
+            var parameters = new DynamicParameters();
+            if (parameterList != null && parameterList.Count > 0)
+            {
+                foreach (var param in parameterList)
+                {
+                    parameters.Add(param.ParameterName, param.Value);
+                }
+            }
+            return parameters;
+        }
+
+        private DynamicParameters ConvertToDynamicParametersFromSqlParameters(List<System.Data.SqlClient.SqlParameter> parameterList)
+        {
+            var parameters = new DynamicParameters();
+            if (parameterList != null && parameterList.Count > 0)
+            {
+                foreach (var param in parameterList)
+                {
+                    parameters.Add(param.ParameterName, param.Value);
+                }
+            }
+            return parameters;
+        }
+
+        private DataTable ConvertToDataTable(IDataReader reader, string tableName)
+        {
+            var dataTable = new DataTable(tableName);
+            dataTable.Load(reader);
+            return dataTable;
+        }
+
+        private int HandleException(string commandText, List<CommandParameter> parameterList, Exception exception)
+        {
+            string logMessage = commandText;
+            if (parameterList != null)
+            {
+                logMessage += Environment.NewLine + JsonHelper.Serializer(parameterList);
+            }
+            logMessage += Environment.NewLine + exception.StackTrace;
+            _log.Write(exception.Message, logMessage, TraceEventType.Error);
+
+            Exception exceptionToThrow;
+            _exceptionHandling.HandleException(exception, out exceptionToThrow);
+            throw exceptionToThrow;
+        }
 
     }
 }

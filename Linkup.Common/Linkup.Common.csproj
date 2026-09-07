@@ -1,18 +1,14 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net10.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Autofac" Version="5.2.0" />
-    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
-    <PackageReference Include="EnterpriseLibrary.Common.NetCore" Version="6.3.0" />
-    <PackageReference Include="EnterpriseLibrary.Data.NetCore" Version="6.3.2" />
-    <PackageReference Include="EnterpriseLibrary.ExceptionHandling.Logging.NetCore" Version="6.3.0" />
-    <PackageReference Include="EnterpriseLibrary.ExceptionHandling.NetCore" Version="6.3.0" />
-    <PackageReference Include="EnterpriseLibrary.Logging.Database.NetCore" Version="6.3.2" />
-    <PackageReference Include="EnterpriseLibrary.Logging.NetCore" Version="6.3.2" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.1" />
-    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
+    <PackageReference Include="Autofac" Version="8.2.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Dapper" Version="2.1.35" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
   </ItemGroup>
 </Project>

@@ -1,5 +1,3 @@
-﻿using Microsoft.Practices.EnterpriseLibrary.ExceptionHandling;
-using Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Configuration;
 using System;
 using System.Configuration;
 
@@ -10,17 +8,10 @@ namespace Linkup.Common
         private static ExceptionHandlingService _instance;
         public static ExceptionHandlingService Instance => _instance ?? (_instance = new ExceptionHandlingService());
 
-        private readonly ExceptionManager _exceptionManager;
-        /// <summary>
-        /// HandleException 后，会自动写日志，并调用自定义处理程序
-        /// </summary>
-        public ExceptionManager ExceptionManager => _exceptionManager;
+        private readonly LogService _log = LogService.Instance;
 
         private ExceptionHandlingService()
         {
-            ExceptionHandlingSettings section = (ExceptionHandlingSettings)ConfigurationManager
-                .GetSection(ExceptionHandlingSettings.SectionName);
-            _exceptionManager = section.BuildExceptionManager();
         }
 
         /// <summary>
@@ -30,7 +21,7 @@ namespace Linkup.Common
         /// <returns></returns>
         public bool HandleException(Exception exceptionToHandle)
         {
-            if (exceptionToHandle==null)
+            if (exceptionToHandle == null)
             {
                 return true;
             }
@@ -40,12 +31,14 @@ namespace Linkup.Common
                 return true;
             }
 
-            return _exceptionManager.HandleException(exceptionToHandle, ExceptionPolicyNames.JustLog);
+            // 简单实现：只记录日志
+            _log.Write("Exception", exceptionToHandle.Message, System.Diagnostics.TraceEventType.Error);
+            return true;
         }
 
         public bool HandleException(Exception exceptionToHandle, string policyName)
         {
-            return _exceptionManager.HandleException(exceptionToHandle, policyName);
+            return HandleException(exceptionToHandle);
         }
 
         /// <summary>
@@ -65,9 +58,25 @@ namespace Linkup.Common
                 return true;
             }
 
-            return _exceptionManager.HandleException(exceptionToHandle, ExceptionPolicyNames.LogAndWrap,
-                out exceptionToThrow);
+            // 简单实现：记录日志并将异常包装后抛出
+            _log.Write("Exception", exceptionToHandle.Message, System.Diagnostics.TraceEventType.Error);
+            exceptionToThrow = new WrappedException("An error occurred. See inner exception for details.", exceptionToHandle);
+            return true;
         }
+    }
+
+    /// <summary>
+    /// 异常包装类
+    /// </summary>
+    [Serializable]
+    public class WrappedException : Exception
+    {
+        public WrappedException() : base() { }
+        public WrappedException(string message) : base(message) { }
+        public WrappedException(string message, Exception inner) : base(message, inner) { }
+        protected WrappedException(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
 
     public static class ExceptionPolicyNames

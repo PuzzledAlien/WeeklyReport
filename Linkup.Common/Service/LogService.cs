@@ -1,6 +1,3 @@
-﻿using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
-using Microsoft.Practices.EnterpriseLibrary.Data;
-using Microsoft.Practices.EnterpriseLibrary.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,33 +15,10 @@ namespace Linkup.Common
         private static LogService _instance;
         public static LogService Instance => _instance ?? (_instance = new LogService());
 
-        private readonly LogWriter _writer;
-
         protected LogService()
         {
-            //http://www.cnblogs.com/theonewu/p/4045049.html
-            //http://entlib.codeplex.com/discussions/442089
-            //http://entlib.codeplex.com/discussions/442387
-            DatabaseFactory.SetDatabaseProviderFactory(new DatabaseProviderFactory());
-
-            IConfigurationSource configurationSource = ConfigurationSourceFactory.Create();
-            LogWriterFactory logWriterFactory = new LogWriterFactory(configurationSource);
-            _writer = logWriterFactory.Create();
-
-            Logger.SetLogWriter(_writer);
+            // 使用简单的日志实现，不再依赖Enterprise Library
         }
-
-        /*
-         * ExceptionHandling 需要先调用SetLogWriter
-         * 所以想那边显示调用以确保
-         * 但是，SetLogWriter 重复调用会报错，虽然能通过一个bool值让它不要抛出异常
-         * 但是，重复调用之后 _writer，就不能用了，一用就报错
-         * 现在折衷方案，在Application_Start中调用一下log，确保其最先初始化
-         */
-        //public void SetLogWriter()
-        //{
-        //    Logger.SetLogWriter(_writer, false);
-        //}
 
         /// <summary>
         /// Information
@@ -73,14 +47,12 @@ namespace Linkup.Common
 
         public void Write(string title, string message, TraceEventType traceEventType)
         {
-            LogEntry log = new LogEntry
-            {
-                Severity = traceEventType,
-                Title = string.IsNullOrEmpty(title) ? "" : title,
-                Message = string.IsNullOrEmpty(message) ? "" : message
-            };
+            // 使用System.Diagnostics.Trace进行简单日志记录
+            string logMessage = $"[{traceEventType}] {title}: {message}";
+            Trace.WriteLine(logMessage);
 
-            _writer.Write(log);
+            // 同时输出到Debug窗口
+            Debug.WriteLine(logMessage);
         }
     }
 }
