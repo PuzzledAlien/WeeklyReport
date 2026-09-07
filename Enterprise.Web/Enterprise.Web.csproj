@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
@@ -7,7 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.0" />
-    <PackageReference Include="NPOI" Version="2.7.2" />
+    <PackageReference Include="NPOI" Version="2.7.3" />
     <PackageReference Include="EnterpriseLibrary.Common.NetCore" Version="7.0.0-rc2" />
     <PackageReference Include="EnterpriseLibrary.Data.NetCore" Version="7.0.0-rc2" />
     <PackageReference Include="EnterpriseLibrary.ExceptionHandling.Logging.NetCore" Version="7.0.0-rc3" />
