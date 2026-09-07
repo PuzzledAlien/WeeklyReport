@@ -21,7 +21,7 @@ BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
 	-- interfering with SELECT statements.
 	SET NOCOUNT ON;
-	
+
 	;with cte_Organization(Id,Name,parent,Sort,level)
 	as
 	(
@@ -33,9 +33,9 @@ BEGIN
 		--递归条件
 		select a.Id,a.Name,a.parent,a.Sort,level+1
 		from Organization a
-		inner join 
+		inner join
 		cte_Organization b
-		on ( a.parent=b.id)  
+		on ( a.parent=b.id)
 	)
 
    SELECT [User].[Id],[User].[Name],

@@ -1,19 +1,27 @@
 using Linkup.Common;
 using Linkup.DataRelationalMapping;
 using Dapper;
-using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Data.Common;
-using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using ConfigManager = System.Configuration.ConfigurationManager;
 
 namespace Linkup.Data
 {
+    /// <summary>
+    /// 数据库提供程序类型
+    /// </summary>
+    public enum DatabaseProvider
+    {
+        SqlServer,
+        MySql
+    }
+
     /*
      * 配合 Linkup.DataRelationalMapping 对数据库进行操作
      *
@@ -22,25 +30,111 @@ namespace Linkup.Data
     public class DatabaseWrapper
     {
         private readonly string _connectionString;
+        private readonly DatabaseProvider _databaseProvider;
         private readonly LogService _log = LogService.Instance;
         private readonly ExceptionHandlingService _exceptionHandling = ExceptionHandlingService.Instance;
+        private static IConfiguration _configuration;
+
+        /// <summary>
+        /// 设置配置（从 ASP.NET Core 调用）
+        /// </summary>
+        public static void SetConfiguration(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
 
         /// <summary>
         /// 用配置文件中 DefaultConnection 创建数据库连接
         /// </summary>
         public DatabaseWrapper()
         {
-            _connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            // 优先使用 appsettings.json 配置
+            if (_configuration != null)
+            {
+                var provider = _configuration["DatabaseProvider"] ?? "SqlServer";
+                _databaseProvider = provider.Equals("MySql", StringComparison.OrdinalIgnoreCase)
+                    ? DatabaseProvider.MySql
+                    : DatabaseProvider.SqlServer;
+
+                if (_databaseProvider == DatabaseProvider.MySql)
+                {
+                    _connectionString = _configuration["ConnectionStrings:MySqlConnection"]
+                        ?? _configuration["ConnectionStrings:DefaultConnection"];
+                }
+                else
+                {
+                    _connectionString = _configuration["ConnectionStrings:DefaultConnection"];
+                }
+            }
+            else
+            {
+                // 兼容旧版 .config 文件
+                _databaseProvider = DatabaseProvider.SqlServer;
+                _connectionString = ConfigManager.ConnectionStrings["DefaultConnection"]?.ConnectionString;
+            }
+
+            if (string.IsNullOrEmpty(_connectionString))
+            {
+                throw new InvalidOperationException("未配置数据库连接字符串");
+            }
         }
 
         public DatabaseWrapper(string connectionStringConfig)
         {
-            _connectionString = ConfigurationManager.ConnectionStrings[connectionStringConfig].ConnectionString;
+            if (_configuration != null)
+            {
+                var provider = _configuration["DatabaseProvider"] ?? "SqlServer";
+                _databaseProvider = provider.Equals("MySql", StringComparison.OrdinalIgnoreCase)
+                    ? DatabaseProvider.MySql
+                    : DatabaseProvider.SqlServer;
+
+                if (_databaseProvider == DatabaseProvider.MySql && connectionStringConfig == "DefaultConnection")
+                {
+                    _connectionString = _configuration["ConnectionStrings:MySqlConnection"]
+                        ?? _configuration["ConnectionStrings:DefaultConnection"];
+                }
+                else
+                {
+                    _connectionString = _configuration[$"ConnectionStrings:{connectionStringConfig}"];
+                }
+            }
+            else
+            {
+                _databaseProvider = DatabaseProvider.SqlServer;
+                _connectionString = ConfigManager.ConnectionStrings[connectionStringConfig]?.ConnectionString;
+            }
+
+            if (string.IsNullOrEmpty(_connectionString))
+            {
+                throw new InvalidOperationException($"未配置数据库连接字符串: {connectionStringConfig}");
+            }
         }
 
-        private Microsoft.Data.SqlClient.SqlConnection CreateConnection()
+        private DbConnection CreateConnection()
         {
-            return new Microsoft.Data.SqlClient.SqlConnection(_connectionString);
+            return _databaseProvider switch
+            {
+                DatabaseProvider.MySql => new MySql.Data.MySqlClient.MySqlConnection(_connectionString),
+                _ => new Microsoft.Data.SqlClient.SqlConnection(_connectionString)
+            };
+        }
+
+        /// <summary>
+        /// 获取参数前缀
+        /// </summary>
+        private string GetParameterPrefix()
+        {
+            return _databaseProvider == DatabaseProvider.MySql ? "?" : "@";
+        }
+
+        /// <summary>
+        /// 将 SQL Server 语法转换为 MySQL 语法（方括号转反引号）
+        /// </summary>
+        private string ConvertToMySqlSyntax(string sql)
+        {
+            if (_databaseProvider != DatabaseProvider.MySql)
+                return sql;
+            return sql.Replace("[", "`").Replace("]", "`");
         }
 
         /// <summary>
@@ -69,7 +163,8 @@ namespace Linkup.Data
             {
                 using var connection = CreateConnection();
                 var parameters = ConvertToDynamicParameters(parameterList);
-                return connection.Execute(commandText, parameters, commandType: commandType == CommandType.StoredProcedure ? CommandType.StoredProcedure : CommandType.Text);
+                var sql = ConvertToMySqlSyntax(commandText);
+                return connection.Execute(sql, parameters, commandType: commandType == CommandType.StoredProcedure ? CommandType.StoredProcedure : CommandType.Text);
             }
             catch (Exception exception)
             {
@@ -103,7 +198,8 @@ namespace Linkup.Data
             {
                 using var connection = CreateConnection();
                 var parameters = ConvertToDynamicParameters(parameterList);
-                return connection.ExecuteScalar(commandText, parameters, commandType: commandType == CommandType.StoredProcedure ? CommandType.StoredProcedure : CommandType.Text);
+                var sql = ConvertToMySqlSyntax(commandText);
+                return connection.ExecuteScalar(sql, parameters, commandType: commandType == CommandType.StoredProcedure ? CommandType.StoredProcedure : CommandType.Text);
             }
             catch (Exception exception)
             {
@@ -161,8 +257,9 @@ namespace Linkup.Data
             {
                 using var connection = CreateConnection();
                 var parameters = ConvertToDynamicParameters(parameterList);
+                var sql = ConvertToMySqlSyntax(commandText);
 
-                var reader = connection.ExecuteReader(commandText, parameters, commandType: commandType == CommandType.StoredProcedure ? CommandType.StoredProcedure : CommandType.Text);
+                var reader = connection.ExecuteReader(sql, parameters, commandType: commandType == CommandType.StoredProcedure ? CommandType.StoredProcedure : CommandType.Text);
                 var ds = new DataSet();
                 ds.Tables.Add(ConvertToDataTable(reader, tableNameArray?.FirstOrDefault() ?? "Table"));
                 return ds;
@@ -181,13 +278,14 @@ namespace Linkup.Data
         public int ExcuteSqlExpression(SqlExpression sqlExpression)
         {
             int affectedRowCount = 0;
-            Microsoft.Data.SqlClient.SqlConnection connection = null;
+            DbConnection connection = null;
             try
             {
                 connection = CreateConnection();
                 connection.Open();
                 var parameters = ConvertToDynamicParametersFromSqlParameters(sqlExpression.ParameterList);
-                affectedRowCount = connection.Execute(sqlExpression.Sql, parameters);
+                var sql = ConvertToMySqlSyntax(sqlExpression.Sql);
+                affectedRowCount = connection.Execute(sql, parameters);
             }
             catch (Exception exception)
             {
@@ -204,8 +302,8 @@ namespace Linkup.Data
 
         public void ExcuteSqlExpression(List<SqlExpression> sqlExpressionList)
         {
-            Microsoft.Data.SqlClient.SqlConnection connection = null;
-            Microsoft.Data.SqlClient.SqlTransaction transaction = null;
+            DbConnection connection = null;
+            DbTransaction transaction = null;
             try
             {
                 connection = CreateConnection();
@@ -217,7 +315,8 @@ namespace Linkup.Data
                     try
                     {
                         var parameters = ConvertToDynamicParametersFromSqlParameters(item.ParameterList);
-                        connection.Execute(item.Sql, parameters, transaction: transaction);
+                        var sql = ConvertToMySqlSyntax(item.Sql);
+                        connection.Execute(sql, parameters, transaction: transaction);
                     }
                     catch (Exception exception)
                     {
@@ -304,6 +403,9 @@ namespace Linkup.Data
             SqlExpression sqlExpression = RelationalMappingUnity.GetSqlExpression(obj, args);
 
             DataSet ds = ExcuteDataSetSqlExpression(sqlExpression);
+            if (ds == null || ds.Tables.Count == 0)
+                return false;
+
             List<T> dataList = RelationalMappingUnity.Select<T>(ds.Tables[0]);
 
             Debug.Assert(dataList.Count <= 1, "Fill 时取出的记录大于1条");
@@ -357,6 +459,9 @@ namespace Linkup.Data
             SqlExpression sqlExpression = RelationalMappingUnity.GetSqlExpression(new T(), args);
 
             DataSet ds = ExcuteDataSetSqlExpression(sqlExpression);
+            if (ds == null || ds.Tables.Count == 0)
+                return new List<T>();
+
             List<T> dataList = RelationalMappingUnity.Select<T>(ds.Tables[0]);
 
             if (pagingArgs != null)
@@ -380,6 +485,8 @@ namespace Linkup.Data
         public List<T> Select<T>(string sql) where T : class
         {
             DataSet ds = ExecuteDataSet(sql);
+            if (ds == null || ds.Tables.Count == 0)
+                return new List<T>();
             List<T> dataList = RelationalMappingUnity.Select<T>(ds.Tables[0]);
             return dataList;
         }
@@ -387,6 +494,8 @@ namespace Linkup.Data
         public List<T> Select<T>(string sql, List<CommandParameter> parameterList) where T : class
         {
             DataSet ds = ExecuteDataSet(sql, parameterList, new string[] { "Table" });
+            if (ds == null || ds.Tables.Count == 0)
+                return new List<T>();
             List<T> dataList = RelationalMappingUnity.Select<T>(ds.Tables[0]);
             return dataList;
         }

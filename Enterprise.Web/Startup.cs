@@ -1,4 +1,5 @@
 using Linkup.Common;
+using Linkup.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +22,8 @@ namespace Enterprise.Web
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            // 初始化数据库配置，支持多数据库
+            DatabaseWrapper.SetConfiguration(Configuration);
         }
 
         public IConfiguration Configuration { get; }
