@@ -1,0 +1,22 @@
+-- 初始化数据
+-- 密码: 123456 (MD5: E10ADC3949BA59ABBE56E057F20F883E)
+
+-- 1. 先插入Domain
+IF NOT EXISTS (SELECT 1 FROM [Domain] WHERE [Id] = '00000000-0000-0000-0000-000000000001')
+BEGIN
+    INSERT INTO [Domain] ([Id]) VALUES ('00000000-0000-0000-0000-000000000001');
+END
+
+-- 2. 插入组织架构（根组织，ID与Domain相同以便GetOrganization(domain.Id)能正确获取）
+IF NOT EXISTS (SELECT 1 FROM [Organization] WHERE [Id] = '00000000-0000-0000-0000-000000000001')
+BEGIN
+    INSERT INTO [Organization] ([Id], [Domain], [Parent], [Name], [Sort])
+    VALUES ('00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000001', NULL, '总公司', 0);
+END
+
+-- 3. 插入管理员用户
+IF NOT EXISTS (SELECT 1 FROM [User] WHERE [Account] = 'admin')
+BEGIN
+    INSERT INTO [User] ([Id], [Domain], [Organization], [Account], [Password], [Name], [Removed])
+    VALUES (NEWID(), '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000001', 'admin', 'E10ADC3949BA59ABBE56E057F20F883E', '管理员', 0);
+END

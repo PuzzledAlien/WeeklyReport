@@ -1,4 +1,4 @@
-﻿
+
 @{
     ViewBag.Title = "OrganizationSelector";
     Layout = "~/Views/Shared/_LayoutBasal.cshtml";
@@ -51,7 +51,7 @@
                                 enable: true,
                                 idKey: "Id",
                                 pIdKey: "Parent",
-                                rootPId: "@ViewBag.RootOrganization.Id"
+                                rootPId: "@ViewBag.RootOrganization?.Id"
                             }
                         }
                     };

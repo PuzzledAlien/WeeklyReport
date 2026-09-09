@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Enterprise.Web.Areas.Api.Controllers
 {
+	[Area("Api")]
 	public class SettingsController : EnterpriseController
 	{
 		private SettingsManager _settingsManager = SettingsManager.Instance;
@@ -410,7 +411,8 @@ namespace Enterprise.Web.Areas.Api.Controllers
 			return RespondDataResult(userListByRoleId);
 		}
 
-		[HttpGet("Api/Settings/Feedback")]
+		[HttpPost("Api/Settings/Feedback")]
+        [HttpPost("Api/Settings/FeedBack")]
 		public ActionResult Feedback()
 		{
 			Feedback feedback = RequestArgs<Feedback>();

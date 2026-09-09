@@ -1,4 +1,4 @@
-﻿
+
 @{
     ViewBag.Title = "反馈";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -49,6 +49,7 @@
         $.ajax({
             url: "/Api/Settings/FeedBack",
             type: "POST",
+            contentType: "application/json",
             dataType: "json",
             data: JSON.stringify(feedBack),
             success: function (data, status, jqXHR)

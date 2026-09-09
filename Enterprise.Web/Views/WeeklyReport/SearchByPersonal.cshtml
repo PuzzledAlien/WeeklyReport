@@ -205,13 +205,17 @@
         @if (AuthorizationHelper.Verify("WeeklyReport_SearchByPerson", HttpContextAccessor.HttpContext))
         {
             <div style="float:left; line-height:34px; margin-left:20px;">
-                @CustomerHelpers.PersonSelector("personSelector", Model.UserId.ToString(), Model.UserName, ViewBag.RootOrganization.Id, ViewBag.RootOrganization.Name)
+                @CustomerHelpers.PersonSelector("personSelector", Model.UserId.ToString(), Model.UserName, 
+                    ViewBag.RootOrganization?.Id ?? Guid.Empty, 
+                    ViewBag.RootOrganization?.Name ?? "")
             </div>
         }
         else
         {
             <div style="float:left; line-height:34px; margin-left:20px;">
-                @CustomerHelpers.PersonSelector("personSelector", Model.UserId.ToString(), Model.UserName, ViewBag.RootOrganization.Id, ViewBag.RootOrganization.Name, false)
+                @CustomerHelpers.PersonSelector("personSelector", Model.UserId.ToString(), Model.UserName, 
+                    ViewBag.RootOrganization?.Id ?? Guid.Empty, 
+                    ViewBag.RootOrganization?.Name ?? "", false)
             </div>
         }
 

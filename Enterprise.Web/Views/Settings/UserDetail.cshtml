@@ -1,4 +1,4 @@
-﻿@model Enterprise.Web.Models.UserDetailViewModel
+@model Enterprise.Web.Models.UserDetailViewModel
 
 @{
     ViewBag.Title = "人员详情";
@@ -32,7 +32,7 @@
         });
 
         //设置部门，默认设置为组织机构的根目录
-        setSelectedOrganization("organizationSelector", '@ViewBag.RootOrganization.Id', '@ViewBag.RootOrganization.Name');
+        setSelectedOrganization("organizationSelector", '@ViewBag.RootOrganization?.Id', '@ViewBag.RootOrganization?.Name');
 
         loadUser();
 
@@ -268,7 +268,9 @@
                 <tr>
                     <td height="50">部门：</td>
                     <td>
-                        @CustomerHelpers.OrganizationSelector("organizationSelector", null, null, ViewBag.RootOrganization.Id, ViewBag.RootOrganization.Name)
+                        @CustomerHelpers.OrganizationSelector("organizationSelector", null, null, 
+                            ViewBag.RootOrganization?.Id ?? Guid.Empty, 
+                            ViewBag.RootOrganization?.Name ?? "")
                     </td>
                 </tr>
                 <tr>

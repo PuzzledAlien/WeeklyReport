@@ -1,4 +1,4 @@
-﻿@model Enterprise.Web.Models.ReportByOrganizationViewModel
+@model Enterprise.Web.Models.ReportByOrganizationViewModel
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     ViewBag.Title = "统计";
@@ -68,7 +68,9 @@
             组织架构：
         </div>
         <div style="float:left; margin-left:20px;">
-            @CustomerHelpers.OrganizationSelector("organizationSelector", null, null, ViewBag.RootOrganization.Id, ViewBag.RootOrganization.Name)
+            @CustomerHelpers.OrganizationSelector("organizationSelector", null, null, 
+                ViewBag.RootOrganization?.Id ?? Guid.Empty, 
+                ViewBag.RootOrganization?.Name ?? "")
         </div>
     </div>
 

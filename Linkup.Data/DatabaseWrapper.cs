@@ -259,10 +259,70 @@ namespace Linkup.Data
                 var parameters = ConvertToDynamicParameters(parameterList);
                 var sql = ConvertToMySqlSyntax(commandText);
 
-                var reader = connection.ExecuteReader(sql, parameters, commandType: commandType == CommandType.StoredProcedure ? CommandType.StoredProcedure : CommandType.Text);
-                var ds = new DataSet();
-                ds.Tables.Add(ConvertToDataTable(reader, tableNameArray?.FirstOrDefault() ?? "Table"));
-                return ds;
+                var commandTypeValue = commandType == CommandType.StoredProcedure ? CommandType.StoredProcedure : CommandType.Text;
+                
+                // 如果是存储过程调用，读取多个结果集；否则只读取第一个
+                if (commandType == CommandType.StoredProcedure)
+                {
+                    using var reader = connection.ExecuteReader(sql, parameters, commandType: commandTypeValue);
+                    
+                    var ds = new DataSet();
+                    int tableIndex = 0;
+                    
+                    do
+                    {
+                        var dataTable = new DataTable(tableNameArray?.Length > tableIndex ? tableNameArray[tableIndex] : $"Table{tableIndex}");
+                        
+                        // 读取列信息
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+                            dataTable.Columns.Add(reader.GetName(i), typeof(object));
+                        }
+                        
+                        // 读取数据行
+                        while (reader.Read())
+                        {
+                            var row = dataTable.NewRow();
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                                row[i] = reader.IsDBNull(i) ? DBNull.Value : reader.GetValue(i);
+                            }
+                            dataTable.Rows.Add(row);
+                        }
+                        
+                        ds.Tables.Add(dataTable);
+                        tableIndex++;
+                    } while (reader.NextResult());
+                    
+                    return ds;
+                }
+                else
+                {
+                    // 普通 SQL 查询只读取第一个结果集
+                    using var reader = connection.ExecuteReader(sql, parameters, commandType: commandTypeValue);
+                    var ds = new DataSet();
+                    var dataTable = new DataTable(tableNameArray?.FirstOrDefault() ?? "Table");
+                    
+                    // 读取列信息
+                    for (int i = 0; i < reader.FieldCount; i++)
+                    {
+                        dataTable.Columns.Add(reader.GetName(i), typeof(object));
+                    }
+                    
+                    // 读取数据行
+                    while (reader.Read())
+                    {
+                        var row = dataTable.NewRow();
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+                            row[i] = reader.IsDBNull(i) ? DBNull.Value : reader.GetValue(i);
+                        }
+                        dataTable.Rows.Add(row);
+                    }
+                    
+                    ds.Tables.Add(dataTable);
+                    return ds;
+                }
             }
             catch (Exception exception)
             {
@@ -663,7 +723,9 @@ namespace Linkup.Data
             {
                 foreach (var param in parameterList)
                 {
-                    parameters.Add(param.ParameterName, param.Value);
+                    // Dapper 不支持 DBNull，将 DBNull 转换为 null
+                    var value = param.Value == DBNull.Value ? null : param.Value;
+                    parameters.Add(param.ParameterName, value);
                 }
             }
             return parameters;
@@ -676,7 +738,9 @@ namespace Linkup.Data
             {
                 foreach (var param in parameterList)
                 {
-                    parameters.Add(param.ParameterName, param.Value);
+                    // Dapper 不支持 DBNull，将 DBNull 转换为 null
+                    var value = param.Value == DBNull.Value ? null : param.Value;
+                    parameters.Add(param.ParameterName, value);
                 }
             }
             return parameters;

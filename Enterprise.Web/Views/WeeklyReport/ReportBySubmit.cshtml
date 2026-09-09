@@ -1,4 +1,4 @@
-﻿@model Enterprise.Web.Models.ReportBySubmitViewModel
+@model Enterprise.Web.Models.ReportBySubmitViewModel
 @{
     ViewBag.Title = "统计";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -106,7 +106,9 @@
             组织架构：
         </div>
         <div style="float:left; margin-left:20px;">
-            @CustomerHelpers.OrganizationSelector("organizationSelector", null, null, ViewBag.RootOrganization.Id, ViewBag.RootOrganization.Name)
+            @CustomerHelpers.OrganizationSelector("organizationSelector", null, null, 
+                ViewBag.RootOrganization?.Id ?? Guid.Empty, 
+                ViewBag.RootOrganization?.Name ?? "")
         </div>
         <div style="float:left; line-height:34px;margin-left:20px;">
             <input name="btnSearch" type="button" class="btn_blue" id="btnSearch" value="查询" onclick="search()" />

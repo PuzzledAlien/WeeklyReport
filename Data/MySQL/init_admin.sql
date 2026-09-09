@@ -1,0 +1,13 @@
+-- 初始化数据
+-- 密码: 123456 (MD5: E10ADC3949BA59ABBE56E057F20F883E)
+
+-- 1. 先插入Domain
+INSERT IGNORE INTO `Domain` (`Id`) VALUES ('00000000-0000-0000-0000-000000000001');
+
+-- 2. 插入组织架构（根组织，ID与Domain相同以便GetOrganization(domain.Id)能正确获取）
+INSERT IGNORE INTO `Organization` (`Id`, `Domain`, `Parent`, `Name`, `Sort`)
+VALUES ('00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000001', NULL, '总公司', 0);
+
+-- 3. 插入管理员用户（防止重复）
+INSERT IGNORE INTO `User` (`Id`, `Domain`, `Organization`, `Account`, `Password`, `Name`, `Removed`)
+VALUES ('00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000001', 'admin', 'E10ADC3949BA59ABBE56E057F20F883E', '管理员', 0);
