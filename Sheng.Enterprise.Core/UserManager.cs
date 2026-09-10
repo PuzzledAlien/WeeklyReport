@@ -150,7 +150,7 @@ namespace Sheng.Enterprise.Core
 			this._dataBase.ExcuteSqlExpression(sqlExpression);
 			list = new List<CommandParameter>();
 			list.Add(new CommandParameter("@user", user.Id));
-			this._dataBase.ExecuteNonQuery("DELETE [UserWorkType] WHERE [User] = @user", list);
+			this._dataBase.ExecuteNonQuery("DELETE FROM [UserWorkType] WHERE [User] = @user", list);
 			if (workTypeList != null && workTypeList.Count > 0)
 			{
 				foreach (Guid current in workTypeList)
@@ -181,7 +181,7 @@ namespace Sheng.Enterprise.Core
 			this._dataBase.Insert(user);
 			list = new List<CommandParameter>();
 			list.Add(new CommandParameter("@user", user.Id));
-			this._dataBase.ExecuteNonQuery("DELETE [UserWorkType] WHERE [User] = @user", list);
+			this._dataBase.ExecuteNonQuery("DELETE FROM [UserWorkType] WHERE [User] = @user", list);
 			if (workTypeList != null && workTypeList.Count > 0)
 			{
 				foreach (Guid current in workTypeList)
