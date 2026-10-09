@@ -1,4 +1,4 @@
-﻿@model Enterprise.Web.Models.WorkStatusViewModel
+@model Enterprise.Web.Models.WorkStatusViewModel
 
 @{
     ViewBag.Title = "完成情况";
@@ -18,8 +18,18 @@
     var _mode = "create";//modify
 
     $(document).ready(function () {
+        // 保存弹窗内容
         _createDivHtml = $("#divEdit").html();
+        
+        // 清空原始 div 内容以释放内存
         $("#divEdit").html("");
+
+        // 验证内容是否正确获取
+        if (!_createDivHtml || _createDivHtml.trim() === '') {
+            console.error("弹窗内容获取失败");
+        } else {
+            console.log("弹窗内容获取成功，长度:", _createDivHtml.length);
+        }
     });
 
     function create() {
@@ -28,6 +38,20 @@
 
     function showEditDiv() {
         _mode = "create";
+
+        // 验证必要变量
+        if (typeof layer === 'undefined') {
+            alert("layer.js 未加载完成，请刷新页面后重试");
+            return;
+        }
+        if (typeof _layerShift === 'undefined') {
+            alert("common.js 未加载完成，请刷新页面后重试");
+            return;
+        }
+        if (!_createDivHtml || _createDivHtml.trim() === '') {
+            alert("弹窗内容为空，请刷新页面后重试");
+            return;
+        }
 
         var title;
         title = "新增";
